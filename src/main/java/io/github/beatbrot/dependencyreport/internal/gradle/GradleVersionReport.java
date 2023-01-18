@@ -13,6 +13,9 @@ public abstract class GradleVersionReport implements Serializable {
 
     public abstract String latest();
 
+    /**
+     * @return {@code true}, if the {@link #current()} Gradle version differs from the {@link #latest()} version.
+     */
     public boolean isUpToDate() {
         return Objects.equals(current(), latest());
     }

@@ -6,6 +6,8 @@ import io.github.beatbrot.dependencyreport.internal.gradle.GradleVersionReport;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.util.Collection;
+import java.util.SortedSet;
 
 public class TextReporter implements Reporter {
 
@@ -14,33 +16,43 @@ public class TextReporter implements Reporter {
 
     @Override
     public void report(final Writer writer, final DependencyReport report) throws IOException {
-        writer.write("The following dependencies are " + GRADLE_UTD_STRING + ":");
-        writer.write(NEWLINE);
-        for (final DependencyStatus status : report.upToDateDependencies()) {
-            writer.write("- " + status.coordinate());
-            writer.write(NEWLINE);
-        }
+        writeUpToDateDeps(writer, report.upToDateDependencies());
+        writeOutdatedDeps(writer, report.outdatedDependencies());
 
-        writer.write(NEWLINE);
-        writer.write("These dependencies have updates available:");
-        writer.write(NEWLINE);
-        for (final DependencyStatus status : report.outdatedDependencies()) {
-            writer.write("- " + status.coordinate().key() + " " + versionUpgrade(status.coordinate().version(), status.latestVersion()));
-            writer.write(NEWLINE);
-        }
-
-        writer.write(NEWLINE);
         final GradleVersionReport gradleReport = report.gradleVersionReport();
         if (gradleReport != null) {
-            if (gradleReport.isUpToDate()) {
-                writer.write("The Gradle version is " + GRADLE_UTD_STRING + ".");
-            } else {
-                writer.write("An update for Gradle is available: " + versionUpgrade(gradleReport.current(), gradleReport.latest()));
-            }
+            writeAvailableGradleUpdate(writer, gradleReport);
         }
     }
 
-    private String versionUpgrade(final String current, final String latest) {
+    private static void writeUpToDateDeps(Writer writer, Collection<DependencyStatus> upToDateDeps) throws IOException {
+        writer.write("The following dependencies are " + GRADLE_UTD_STRING + ":" + NEWLINE);
+        for (final DependencyStatus status : upToDateDeps) {
+            writer.write("- " + status.coordinate());
+            writer.write(NEWLINE);
+        }
+        writer.write(NEWLINE);
+    }
+
+    private static void writeOutdatedDeps(Writer writer, SortedSet<DependencyStatus> outdatedDeps) throws IOException {
+        writer.write("These dependencies have updates available:");
+        writer.write(NEWLINE);
+        for (final DependencyStatus status : outdatedDeps) {
+            writer.write("- " + status.coordinate().key() + " " + versionUpgrade(status.coordinate().version(), status.latestVersion()));
+            writer.write(NEWLINE);
+        }
+        writer.write(NEWLINE);
+    }
+
+    private static void writeAvailableGradleUpdate(Writer writer, GradleVersionReport gradleReport) throws IOException {
+        if (gradleReport.isUpToDate()) {
+            writer.write("The Gradle version is " + GRADLE_UTD_STRING + "." + NEWLINE);
+        } else {
+            writer.write("An update for Gradle is available: " + versionUpgrade(gradleReport.current(), gradleReport.latest()) + NEWLINE);
+        }
+    }
+
+    private static String versionUpgrade(final String current, final String latest) {
         return "[" + current + " -> " + latest + "]";
     }
 }

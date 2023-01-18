@@ -56,7 +56,7 @@ class ForeignProjectTest {
 
     @ParameterizedTest
     @MethodSource("enumerateExternalProjects")
-    @Disabled
+    @Disabled("Only needed as reference.")
     void apply_ben_manes_plugin(final Path project) throws IOException {
         final String taskName = "dependencyUpdates";
         final BuildResult result = gradleRunner(project)

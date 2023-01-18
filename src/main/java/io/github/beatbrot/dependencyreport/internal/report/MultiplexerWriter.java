@@ -51,6 +51,7 @@ public class MultiplexerWriter extends Writer {
     }
 
     private interface Command {
+        @SuppressWarnings("java:S112")
         void call(Writer writer) throws Exception;
     }
 }

@@ -26,6 +26,7 @@ public abstract class DependencyStatus implements Comparable<DependencyStatus>, 
     }
 
     @Override
+    @SuppressWarnings("java:S1210") // Equals correctly implemented by Immutables
     public int compareTo(@Nonnull final DependencyStatus o) {
         return Objects.compare(this, o, COMPARATOR);
     }

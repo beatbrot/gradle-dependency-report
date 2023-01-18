@@ -60,14 +60,11 @@ public class DependencyReportTask extends DefaultTask {
 
     @TaskAction
     public void createReports() throws IOException {
-        System.out.println("--------------------" + dependencyFiles.getFiles().size());
         final LinkedHashSet<DependencyStatus> statusList = new LinkedHashSet<>();
         final File versionFile = getSingleFileOrNull(gradleVersionFile);
         final GradleVersionReport gradleReport = versionFile != null ? Serialization.read(versionFile) : null;
         for (final File file : dependencyFiles) {
-            final LinkedHashSet<DependencyStatus> fileContent = Serialization.read(file);
-            System.out.println("++++++++++++" + fileContent);
-            statusList.addAll(fileContent);
+            statusList.addAll(Serialization.read(file));
         }
         final DependencyReport report = DependencyReport.create(gradleReport, statusList);
 
@@ -80,6 +77,7 @@ public class DependencyReportTask extends DefaultTask {
     }
 
     @SuppressFBWarnings("DM")
+    @SuppressWarnings("java:S106")
     private BufferedWriter createWriter(final Path outPath, final boolean printToConsole) throws IOException {
         final BufferedWriter fileWriter = Files.newBufferedWriter(outPath, StandardCharsets.UTF_8, CREATE, TRUNCATE_EXISTING);
         if (printToConsole) {

@@ -2,6 +2,7 @@ package io.github.beatbrot.dependencyreport.internal.analysis;
 
 
 import io.github.beatbrot.dependencyreport.internal.Tuple;
+import org.gradle.api.artifacts.ModuleVersionIdentifier;
 import org.gradle.api.artifacts.ResolvedDependency;
 import org.immutables.value.Value;
 
@@ -12,18 +13,16 @@ import java.util.Comparator;
 import java.util.Objects;
 
 @Value.Immutable
+@Tuple
 public abstract class Coordinate implements Comparable<Coordinate>, Serializable {
 
     private static final Comparator<Coordinate> COMPARATOR = Comparator.comparing(Coordinate::group)
-            .thenComparing(Coordinate::name)
-            .thenComparing(Coordinate::version);
+        .thenComparing(Coordinate::name)
+        .thenComparing(Coordinate::version);
 
     public static Coordinate from(final ResolvedDependency r) {
-        return ImmutableCoordinate.builder()
-                .group(r.getModule().getId().getGroup())
-                .name(r.getModule().getId().getName())
-                .version(r.getModule().getId().getVersion())
-                .build();
+        ModuleVersionIdentifier id = r.getModule().getId();
+        return ImmutableCoordinate.of(id.getGroup(), id.getName(), id.getVersion());
     }
 
     public abstract String group();
@@ -44,6 +43,7 @@ public abstract class Coordinate implements Comparable<Coordinate>, Serializable
     }
 
     @Override
+    @SuppressWarnings("java:S1210") // Equals correctly implemented by Immutables
     public int compareTo(@Nonnull final Coordinate o) {
         return Objects.compare(this, o, COMPARATOR);
     }
@@ -51,9 +51,10 @@ public abstract class Coordinate implements Comparable<Coordinate>, Serializable
     @Value.Immutable
     @Tuple
     public abstract static class Key {
-        abstract String group();
 
-        abstract String name();
+        public abstract String group();
+
+        public abstract String name();
 
         @Override
         public String toString() {

@@ -1,14 +1,5 @@
 package io.github.beatbrot;
 
-import org.gradle.internal.impldep.com.amazonaws.util.json.Jackson;
-import org.gradle.internal.impldep.com.fasterxml.jackson.databind.JsonNode;
-import org.gradle.internal.impldep.com.fasterxml.jackson.databind.ObjectReader;
-
-import java.io.IOException;
-import java.io.Reader;
-import java.nio.file.Files;
-import java.nio.file.Path;
-
 public class ReportResult {
     private static final String UTD_PREAMBLE = "The following dependencies are UP-TO-DATE:\n";
     private static final String NUTD_PREAMBLE = "These dependencies have updates available:";

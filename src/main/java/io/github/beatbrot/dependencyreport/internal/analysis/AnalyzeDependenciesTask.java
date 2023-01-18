@@ -45,7 +45,7 @@ public class AnalyzeDependenciesTask extends DefaultTask {
     private void analyze(final ConfigurationContainer container) {
         for (final Configuration config : new ArrayList<>(container)) {
             final LenientConfiguration current = createResolvableConfig(config, ModuleDependency::getVersion);
-            final LenientConfiguration latest = createResolvableConfig(config, (ignored) -> "+");
+            final LenientConfiguration latest = createResolvableConfig(config, ignored -> "+");
             analyzeConfiguration(result, current, latest);
         }
     }
@@ -67,41 +67,16 @@ public class AnalyzeDependenciesTask extends DefaultTask {
             .stream()
             .map(Coordinate::from)
             .collect(Collectors.groupingBy(Coordinate::key));
-//            .collect(Collectors.toMap(Coordinate::key, Function.identity()));
-//            .collect(Collectors.groupingBy(Coordinate::key, Collectors.reducing(null, (a, b) -> a == null ? b : a)));
 
 
         for (final Coordinate original : originalDeps) {
-            if (!resolved.containsKey(original.key())) {
-                throw new RuntimeException("Unmatched!!!");
-            }
             for (final Coordinate r : resolved.getOrDefault(original.key(), Collections.emptyList())) {
                 if (!r.key().equals(original.key())) {
                     throw new NoSuchElementException();
                 }
                 result.add(ImmutableDependencyStatus.of(original, r.version()));
             }
-
-
-//            final Coordinate resolvedCoordinate = resolved.get(original.key());
-//            if (resolvedCoordinate != null) {
-//                result.add(ImmutableDependencyStatus.of(original, resolvedCoordinate.version()));
-//            } else {
-//                throw/new NoSuchElementException(original.toString());
-//            }
         }
-    }
-
-    private Configuration createLatestConfig(final Configuration configuration) {
-        final List<ModuleDependency> collect = configuration.getDependencies().stream().filter(ExternalDependency.class::isInstance).map(ModuleDependency.class::cast).map(d -> {
-            final ModuleDependency latest = (ModuleDependency) getProject().getDependencies().create(d.getGroup() + ":" + d.getName() + ":+");
-            latest.setTransitive(false);
-            return latest;
-        }).collect(Collectors.toList());
-        final Configuration copy = configuration.copyRecursive(s -> false).setTransitive(false);
-        copy.setCanBeResolved(true);
-        copy.getDependencies().addAll(collect);
-        return copy;
     }
 
     private LenientConfiguration createResolvableConfig(final Configuration configuration, final Function<ModuleDependency, String> versionSelector) {
