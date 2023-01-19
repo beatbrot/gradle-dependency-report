@@ -8,15 +8,15 @@ import java.util.Objects;
 
 @Value.Immutable
 @Tuple
-public abstract class GradleVersionReport implements Serializable {
-    public abstract String current();
+public interface GradleVersionReport extends Serializable {
+    String current();
 
-    public abstract String latest();
+    String latest();
 
     /**
      * @return {@code true}, if the {@link #current()} Gradle version differs from the {@link #latest()} version.
      */
-    public boolean isUpToDate() {
+    default boolean isUpToDate() {
         return Objects.equals(current(), latest());
     }
 }
