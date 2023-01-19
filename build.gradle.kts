@@ -2,7 +2,7 @@ plugins {
     `java-gradle-plugin`
     id("java-convention")
     id("gradle-blackbox-test")
-    id("com.gradle.plugin-publish") version "1.1.0"
+    alias(libs.plugins.gradlePublish)
     signing
 }
 
@@ -30,7 +30,7 @@ dependencies {
     testImplementation(libs.test.archunit)
     testImplementation(libs.test.mockserver)
 
-    blackboxTestImplementation("org.assertj:assertj-core:3.24.0")
+    blackboxTestImplementation(libs.test.assertj)
     externalProject("jjohannes:idiomatic-gradle:master")
     externalProject("square:okhttp:master")
     externalProject("kotlin:kotlinx-atomicfu:0.19.0")
