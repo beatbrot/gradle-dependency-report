@@ -20,6 +20,7 @@ import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.api.tasks.options.Option;
+import org.gradle.api.tasks.options.OptionValues;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
@@ -27,18 +28,23 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.LinkedHashSet;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 
 public class DependencyReportTask extends DefaultTask {
 
     public static final String NAME = "dependencyReport";
+    public static final String PRINT_DESC = "Print the dependency report to stdout.";
+    public static final String CHECK_DESC = "Do not check for Gradle updates.";
+    public static final String PRINT_OPT = "print-to-console";
+    public static final String CHECK_OPT = "no-gradle-check";
 
     private final ConfigurableFileCollection dependencyFiles;
 
@@ -54,7 +60,7 @@ public class DependencyReportTask extends DefaultTask {
         setDescription("Creates a report about available dependency & Gradle updates.");
         this.dependencyFiles = objectFactory.fileCollection();
         this.gradleVersionFile = objectFactory.fileCollection();
-        this.printToConsole = objectFactory.property(Boolean.class).convention(true);
+        this.printToConsole = objectFactory.property(Boolean.TYPE).convention(true);
         this.outputFile = objectFactory.fileProperty().convention(projectLayout.getBuildDirectory().file("reports/dependencies.txt"));
     }
 
@@ -79,7 +85,7 @@ public class DependencyReportTask extends DefaultTask {
     @SuppressFBWarnings("DM")
     @SuppressWarnings("java:S106")
     private BufferedWriter createWriter(final Path outPath, final boolean printToConsole) throws IOException {
-        final BufferedWriter fileWriter = Files.newBufferedWriter(outPath, StandardCharsets.UTF_8, CREATE, TRUNCATE_EXISTING);
+        final BufferedWriter fileWriter = Files.newBufferedWriter(outPath, UTF_8, CREATE, TRUNCATE_EXISTING);
         if (printToConsole) {
             final PrintWriter stdoutWriter = new PrintWriter(System.out);
             return new BufferedWriter(new MultiplexerWriter(Arrays.asList(fileWriter, stdoutWriter)));
@@ -118,7 +124,19 @@ public class DependencyReportTask extends DefaultTask {
         return printToConsole;
     }
 
-    @Option(description = "Do not check for Gradle updates.", option = "no-gradle-check")
+    @Option(description = PRINT_DESC, option = PRINT_OPT)
+    void setPrintToConsole(String value) {
+        getPrintToConsole().set(Boolean.valueOf(value));
+    }
+
+    @OptionValues(PRINT_OPT)
+    @SuppressWarnings("unused")
+    Collection<Boolean> getBooleanOptions() {
+        return Arrays.asList(false,true);
+    }
+
+    @Option(description = CHECK_DESC, option = CHECK_OPT)
+    @SuppressWarnings("unused")
     public void setNoGradleVersionCheck() {
         gradleVersionFile.setFrom();
     }

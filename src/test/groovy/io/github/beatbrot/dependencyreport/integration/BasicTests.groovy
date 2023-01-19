@@ -5,6 +5,7 @@ import io.github.beatbrot.dependencyreport.internal.Serialization
 import io.github.beatbrot.dependencyreport.internal.analysis.AnalyzeDependenciesTask
 import io.github.beatbrot.dependencyreport.internal.gradle.GradleVersionReport
 import io.github.beatbrot.dependencyreport.internal.gradle.GradleVersionTask
+import org.gradle.api.plugins.HelpTasksPlugin
 import org.gradle.testkit.runner.TaskOutcome
 
 class BasicTests extends GradleSpecification {
@@ -25,7 +26,7 @@ class BasicTests extends GradleSpecification {
         buildFile << PLUGINS_BLOCK
 
         when:
-        def result = gradleRunner().withArguments("depRepo").build()
+        def result = gradleRunner().withArguments(DependencyReportTask.NAME).build()
         then:
         result.task(":${AnalyzeDependenciesTask.NAME}").outcome == TaskOutcome.SUCCESS
         result.task(":${DependencyReportTask.NAME}").outcome == TaskOutcome.SUCCESS
@@ -36,7 +37,7 @@ class BasicTests extends GradleSpecification {
         buildFile << PLUGINS_BLOCK
 
         when:
-        def result = gradleRunner().withArguments(DependencyReportTask.NAME, "--no-gradle-check", "-s").build()
+        def result = gradleRunner().withArguments(DependencyReportTask.NAME, "--${DependencyReportTask.CHECK_OPT}", "-s").build()
         then:
         result.task(":${GradleVersionTask.NAME}") == null
         result.task(":${AnalyzeDependenciesTask.NAME}").outcome == TaskOutcome.SUCCESS
@@ -49,9 +50,9 @@ class BasicTests extends GradleSpecification {
 
         when:
         def result = gradleRunner(false)
-                .withGradleVersion("6.0")
-                .withArguments(GradleVersionTask.NAME)
-                .build()
+            .withGradleVersion("6.0")
+            .withArguments(GradleVersionTask.NAME)
+            .build()
 
         then:
         result.task(":${GradleVersionTask.NAME}").outcome == TaskOutcome.SUCCESS
@@ -59,5 +60,37 @@ class BasicTests extends GradleSpecification {
         def createdReport = Serialization.<GradleVersionReport> read(gradleFile)
         createdReport.current() == "6.0"
         createdReport.latest() != "6.0"
+    }
+
+    def "Task help works"() {
+        given:
+        buildFile << PLUGINS_BLOCK
+
+        when:
+        def result = gradleRunner()
+            .withArguments(HelpTasksPlugin.HELP_GROUP, "--task", DependencyReportTask.NAME)
+            .forwardOutput()
+            .build()
+        then:
+        result.output.contains(DependencyReportTask.CHECK_DESC)
+        result.output.contains(DependencyReportTask.CHECK_OPT)
+        result.output.contains(DependencyReportTask.PRINT_DESC)
+        result.output.contains(DependencyReportTask.PRINT_OPT)
+        result.output.contains(HelpTasksPlugin.HELP_GROUP)
+    }
+
+    def "Task parameters work"(String param) {
+        given:
+        buildFile << PLUGINS_BLOCK
+
+        when:
+        gradleRunner()
+            .withArguments(DependencyReportTask.NAME, "--print-to-console=false")
+            .build()
+        then:
+        noExceptionThrown()
+
+        where:
+        param << ["--${DependencyReportTask.PRINT_OPT}=false", "--${DependencyReportTask.CHECK_OPT}"]
     }
 }
