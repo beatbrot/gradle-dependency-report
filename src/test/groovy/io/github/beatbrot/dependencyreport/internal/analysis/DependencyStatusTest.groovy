@@ -7,9 +7,9 @@ import spock.lang.Specification
 class DependencyStatusTest extends Specification {
 
     @Shared
-    def coordA = ImmutableCoordinate.builder().group("a").name("a").version("1").build()
+    def coordA = ImmutableCoordinate.of("a", "a", "1")
     @Shared
-    def coordB = ImmutableCoordinate.builder().group("a").name("b").version("1").build()
+    def coordB = ImmutableCoordinate.of("a", "b", "1")
 
 
     def "Comparison test"() {

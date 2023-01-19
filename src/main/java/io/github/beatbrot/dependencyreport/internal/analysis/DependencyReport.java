@@ -9,8 +9,8 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 @Value.Immutable
-public abstract class DependencyReport {
-    public static DependencyReport create(@Nullable final GradleVersionReport gradleVersionReport, final Collection<DependencyStatus> dependencyStatuses) {
+public interface DependencyReport {
+    static DependencyReport create(@Nullable final GradleVersionReport gradleVersionReport, final Collection<DependencyStatus> dependencyStatuses) {
         final SortedSet<DependencyStatus> upToDate = new TreeSet<>();
         final SortedSet<DependencyStatus> outDated = new TreeSet<>();
         for (final DependencyStatus status : dependencyStatuses) {
@@ -23,10 +23,10 @@ public abstract class DependencyReport {
             .build();
     }
 
-    public abstract SortedSet<DependencyStatus> upToDateDependencies();
+    SortedSet<DependencyStatus> upToDateDependencies();
 
-    public abstract SortedSet<DependencyStatus> outdatedDependencies();
+    SortedSet<DependencyStatus> outdatedDependencies();
 
     @Nullable
-    public abstract GradleVersionReport gradleVersionReport();
+    GradleVersionReport gradleVersionReport();
 }
