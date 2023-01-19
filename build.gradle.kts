@@ -9,6 +9,7 @@ plugins {
 group = "io.github.beatbrot"
 version = "1.0-SNAPSHOT"
 
+@Suppress("UnstableApiUsage")
 gradlePlugin {
     plugins {
         register("dependencyUpdates") {
@@ -16,9 +17,11 @@ gradlePlugin {
             implementationClass = "io.github.beatbrot.dependencyreport.DependencyUpdatesPlugin"
             displayName = "Dependency Updates"
             description = "Show available dependency updates"
+            tags.set(listOf("dependencies", "versions", "updates"))
         }
     }
-    @Suppress("UnstableApiUsage")
+    website.set("https://github.com/beatbrot/gradle-dependency-report")
+    vcsUrl.set("https://github.com/beatbrot/gradle-dependency-report")
     testSourceSet(java.sourceSets.getByName("blackboxTest"))
 }
 
