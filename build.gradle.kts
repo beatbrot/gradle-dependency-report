@@ -18,6 +18,7 @@ gradlePlugin {
             description = "Show available dependency updates"
         }
     }
+    @Suppress("UnstableApiUsage")
     testSourceSet(java.sourceSets.getByName("blackboxTest"))
 }
 
