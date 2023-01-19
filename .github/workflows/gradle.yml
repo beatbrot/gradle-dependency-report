@@ -25,3 +25,5 @@ jobs:
       uses: gradle/gradle-build-action@v2
       with:
         arguments: build --scan
+      env:
+          GRADLE_TOS_AGREE: yes

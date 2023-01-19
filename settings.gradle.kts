@@ -11,7 +11,7 @@ pluginManagement {
 
 plugins {
     id("com.gradle.enterprise") version ("3.12.2")
-    id("org.gradle.toolchains.foojay-resolver-convention") version("0.4.0")
+     id("org.gradle.toolchains.foojay-resolver-convention") version ("0.4.0")
 }
 
 gradleEnterprise {
@@ -19,5 +19,7 @@ gradleEnterprise {
         capture {
             isTaskInputFiles = true
         }
+        termsOfServiceUrl = "https://gradle.com/terms-of-service"
+        termsOfServiceAgree = System.getenv("GRADLE_TOS_AGREE")
     }
 }
