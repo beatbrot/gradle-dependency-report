@@ -83,6 +83,11 @@ tasks.named(JavaBasePlugin.CHECK_TASK_NAME).configure {
     dependsOn(spotbugsTask)
 }
 
+tasks.withType(JavaCompile::class) {
+    options.compilerArgs.add("-Werror")
+    options.encoding = "UTF-8"
+}
+
 fun findDep(catalog: VersionCatalog, name: String): Provider<MinimalExternalModuleDependency> {
     return catalog.findLibrary(name).orElseThrow { throw NoSuchElementException("Cannot find dependency") }
 }
