@@ -21,7 +21,7 @@ gradlePlugin {
         }
     }
     website.set("https://github.com/beatbrot/gradle-dependency-report")
-    vcsUrl.set("https://github.com/beatbrot/gradle-dependency-report")
+    vcsUrl.set("https://github.com/beatbrot/gradle-dependency-report.git")
     testSourceSet(java.sourceSets.getByName("blackboxTest"))
 }
 
