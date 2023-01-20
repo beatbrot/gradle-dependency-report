@@ -1,12 +1,9 @@
 [libraries]
 immutables = "org.immutables:value:2.9.2"
-jackson = "com.fasterxml.jackson.core:jackson-databind:2.2.3"
 spotbugsAnnotations = "com.github.spotbugs:spotbugs-annotations:4.7.3"
 
 test-archunit = "com.tngtech.archunit:archunit:1.0.1"
-test-spock = "org.spockframework:spock-core:2.3-groovy-3.0"
 test-byteBuddy = "net.bytebuddy:byte-buddy:1.12.21"
-test-junitEngine = "org.junit.jupiter:junit-jupiter-engine:5.8.1"
 test-mockserver = "org.mock-server:mockserver-netty:5.14.0"
 test-assertj = "org.assertj:assertj-core:3.24.0"
 

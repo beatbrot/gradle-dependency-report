@@ -21,13 +21,20 @@ java {
 }
 
 dependencies {
-    testImplementation(findDep(catalog, "test-spock"))
     testRuntimeOnly(findDep(catalog, "test-byteBuddy")) {
         because("Spock requires it for mocks.")
     }
-    testRuntimeOnly(findDep(catalog, "test-junitEngine"))
 
     compileOnly(findDep(catalog, "spotbugsAnnotations"))
+}
+
+@Suppress("UnstableApiUsage")
+testing {
+    suites {
+        named<JvmTestSuite>("test") {
+            useSpock()
+        }
+    }
 }
 
 tasks.named<Test>("test") {
@@ -43,11 +50,7 @@ tasks.named<Test>("test") {
     """.trimIndent()
     ).asFile(StandardCharsets.UTF_8.name())
     inputs.file(spockConfig).withPropertyName("Spock config").withPathSensitivity(PathSensitivity.NONE)
-    jvmArgumentProviders.add(object : CommandLineArgumentProvider {
-        override fun asArguments(): MutableIterable<String> {
-            return mutableListOf("-Dspock.configuration=${spockConfig}")
-        }
-    })
+    jvmArgumentProviders.add(CommandLineArgumentProvider { mutableListOf("-Dspock.configuration=${spockConfig}") })
 }
 
 spotbugs {
