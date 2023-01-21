@@ -1,14 +1,10 @@
-import com.github.spotbugs.snom.SpotBugsTask
 import java.nio.charset.StandardCharsets.UTF_8
-import java.nio.file.Files
-import java.nio.file.StandardOpenOption.CREATE
-import java.nio.file.StandardOpenOption.TRUNCATE_EXISTING
 
 plugins {
     java
     `maven-publish`
     groovy
-    id("com.github.spotbugs-base")
+    pmd
 }
 
 val catalog = extensions.getByType<VersionCatalogsExtension>().named("libs")
@@ -40,6 +36,29 @@ testing {
     }
 }
 
+pmd {
+    toolVersion = "6.53.0"
+    ruleSets = listOf()
+    //language=xml
+    ruleSetConfig = project.resources.text.fromString("""
+        <?xml version="1.0"?>
+        <ruleset name="Custom Rules"
+            xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.io/ruleset_2_0_0.xsd">
+
+            <description>
+                My custom rules
+            </description>
+            <rule ref='category/java/bestpractices.xml'/>
+            <rule ref='category/java/performance.xml'/>
+            <rule ref='category/java/errorprone.xml'>
+                <exclude name='MissingSerialVersionUID'/>
+            </rule>
+        </ruleset>
+    """.trimIndent())
+}
+
 tasks.named<Test>("test") {
     useJUnitPlatform()
     // language=groovy
@@ -56,40 +75,6 @@ tasks.named<Test>("test") {
     jvmArgumentProviders.add(CommandLineArgumentProvider { mutableListOf("-Dspock.configuration=${spockConfig}") })
 }
 
-spotbugs {
-    val excluded = writeString(
-        "spotbugs.xml",
-        // language=xml
-        """
-        <?xml version="1.0" encoding="UTF-8"?>
-        <FindBugsFilter>
-            <Match>
-                <Bug code="EI,EI2"/>
-            </Match>
-        </FindBugsFilter>
-    """.trimIndent()
-    )
-    excludeFilter.set(excluded)
-}
-
-val main = sourceSets["main"]!!
-val spotbugsTask = tasks.register<SpotBugsTask>(main.getTaskName("spotbugs", null)) {
-    description = "Run SpotBugs analysis for the source set main"
-    sourceDirs = main.allSource.sourceDirectories
-    classDirs = main.output
-    auxClassPaths = main.compileClasspath
-
-    reports {
-        create("html") {
-            required.set(true)
-        }
-    }
-}
-
-tasks.named(JavaBasePlugin.CHECK_TASK_NAME).configure {
-    dependsOn(spotbugsTask)
-}
-
 tasks.withType(JavaCompile::class) {
     options.compilerArgs.add("-Werror")
     options.encoding = "UTF-8"
@@ -97,11 +82,4 @@ tasks.withType(JavaCompile::class) {
 
 fun findDep(catalog: VersionCatalog, name: String): Provider<MinimalExternalModuleDependency> {
     return catalog.findLibrary(name).orElseThrow { throw NoSuchElementException("Cannot find dependency") }
-}
-
-fun writeString(name: String, content: String): File {
-    val output = project.layout.buildDirectory.file("tmp/$name").get().asFile
-    Files.createDirectories(output.toPath().parent)
-    Files.writeString(output.toPath(), content, UTF_8, CREATE, TRUNCATE_EXISTING)
-    return output
 }
