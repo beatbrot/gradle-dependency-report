@@ -17,9 +17,7 @@ import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
-import java.util.Properties;
-import java.util.StringJoiner;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -35,6 +33,9 @@ class ForeignProjectTest {
     static Path initScript;
     static Path benManes;
 
+    @TempDir
+    Path gradleCacheDir;
+
     @BeforeAll
     static void beforeAll() throws IOException {
         initScript = initScriptDir.resolve("init.gradle");
@@ -48,7 +49,7 @@ class ForeignProjectTest {
     @ParameterizedTest
     @MethodSource("enumerateExternalProjects")
     void apply_Plugin_to_external_project(final Path project) throws IOException {
-        final BuildResult mine = gradleRunner(project).withArguments("--init-script", initScript.toString(), "dependencyReport").build();
+        final BuildResult mine = gradleRunner(project).withArguments(args("--init-script", initScript.toString(), "dependencyReport")).build();
 
         assertThat(mine.task(":dependencyReport")).isNotNull().extracting(BuildTask::getOutcome).isEqualTo(TaskOutcome.SUCCESS);
         ReportResult.parseMine(mine.getOutput());
@@ -96,5 +97,12 @@ class ForeignProjectTest {
             return s.filter(Files::isDirectory)
                 .collect(Collectors.toList());
         }
+    }
+
+    private List<String> args(String... otherArgs) {
+        ArrayList<String> result = new ArrayList<>();
+        result.addAll(Arrays.asList("--project-cache-dir", gradleCacheDir.toString()));
+        result.addAll(Arrays.asList(otherArgs));
+        return result;
     }
 }

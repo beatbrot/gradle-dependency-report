@@ -1,5 +1,8 @@
 import com.github.spotbugs.snom.SpotBugsTask
-import java.nio.charset.StandardCharsets
+import java.nio.charset.StandardCharsets.UTF_8
+import java.nio.file.Files
+import java.nio.file.StandardOpenOption.CREATE
+import java.nio.file.StandardOpenOption.TRUNCATE_EXISTING
 
 plugins {
     java
@@ -48,14 +51,15 @@ tasks.named<Test>("test") {
             }
         }
     """.trimIndent()
-    ).asFile(StandardCharsets.UTF_8.name())
+    ).asFile(UTF_8.name())
     inputs.file(spockConfig).withPropertyName("Spock config").withPathSensitivity(PathSensitivity.NONE)
     jvmArgumentProviders.add(CommandLineArgumentProvider { mutableListOf("-Dspock.configuration=${spockConfig}") })
 }
 
 spotbugs {
-    // language=xml
-    val excluded = project.resources.text.fromString(
+    val excluded = writeString(
+        "spotbugs.xml",
+        // language=xml
         """
         <?xml version="1.0" encoding="UTF-8"?>
         <FindBugsFilter>
@@ -65,7 +69,7 @@ spotbugs {
         </FindBugsFilter>
     """.trimIndent()
     )
-    excludeFilter.set(excluded.asFile(StandardCharsets.UTF_8.name()))
+    excludeFilter.set(excluded)
 }
 
 val main = sourceSets["main"]!!
@@ -93,4 +97,10 @@ tasks.withType(JavaCompile::class) {
 
 fun findDep(catalog: VersionCatalog, name: String): Provider<MinimalExternalModuleDependency> {
     return catalog.findLibrary(name).orElseThrow { throw NoSuchElementException("Cannot find dependency") }
+}
+
+fun writeString(name: String, content: String): File {
+    val output = project.layout.buildDirectory.file("tmp/$name").get().asFile
+    Files.writeString(output.toPath(), content, UTF_8, CREATE, TRUNCATE_EXISTING)
+    return output
 }

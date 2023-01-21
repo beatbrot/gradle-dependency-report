@@ -1,3 +1,5 @@
+@file:Suppress("UnstableApiUsage")
+
 plugins {
     java
 }
@@ -31,7 +33,11 @@ testing {
             }
             targets {
                 all {
+                    tasks.named(JavaBasePlugin.CHECK_TASK_NAME).configure {
+                        dependsOn(testTask)
+                    }
                     testTask.configure {
+                        shouldRunAfter("test")
                         dependsOn(externalProjectTask)
                         inputs.dir(externalProjectDir)
                             .withPathSensitivity(PathSensitivity.RELATIVE)
