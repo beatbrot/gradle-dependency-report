@@ -24,4 +24,4 @@ gradleEnterprise {
     }
 }
 
-includeBuild("example")
+enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
