@@ -1,6 +1,6 @@
 package io.github.beatbrot.dependencyreport.integration
 
-import io.github.beatbrot.dependencyreport.DependencyUpdatesPlugin
+import io.github.beatbrot.dependencyreport.DependencyReportPlugin
 import io.github.beatbrot.dependencyreport.internal.analysis.AnalyzeDependenciesTask
 import org.gradle.testkit.runner.TaskOutcome
 
@@ -19,7 +19,7 @@ class MultiProjectTest extends GradleSpecification {
                 .withArguments("dependencyReport")
                 .build()
         then:
-        !result.output.contains(DependencyUpdatesPlugin.PLUGIN_SHOULD_BE_APPLIED_TO_ROOT)
+        !result.output.contains(DependencyReportPlugin.PLUGIN_SHOULD_BE_APPLIED_TO_ROOT)
         result.task(":${AnalyzeDependenciesTask.NAME}").outcome == TaskOutcome.SUCCESS
         result.task(":a:${AnalyzeDependenciesTask.NAME}").outcome == TaskOutcome.SUCCESS
         result.task(":b:${AnalyzeDependenciesTask.NAME}").outcome == TaskOutcome.SUCCESS
@@ -32,7 +32,7 @@ class MultiProjectTest extends GradleSpecification {
         when:
         def result = gradleRunner().build()
         then:
-        result.output.contains(DependencyUpdatesPlugin.PLUGIN_SHOULD_BE_APPLIED_TO_ROOT)
+        result.output.contains(DependencyReportPlugin.PLUGIN_SHOULD_BE_APPLIED_TO_ROOT)
     }
 
     private Path createSubproject(String name) {

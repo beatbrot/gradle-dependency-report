@@ -14,10 +14,10 @@ gradlePlugin {
     plugins {
         register("dependencyUpdates") {
             id = "io.github.beatbrot.dependency-report"
-            implementationClass = "io.github.beatbrot.dependencyreport.DependencyUpdatesPlugin"
-            displayName = "Dependency Updates"
+            implementationClass = "io.github.beatbrot.dependencyreport.DependencyReportPlugin"
+            displayName = "Dependency Report"
             description = "Show available dependency updates"
-            tags.set(listOf("dependencies", "versions", "updates"))
+            tags.set(listOf("dependencies", "versions", "updates", "report"))
         }
     }
     website.set("https://github.com/beatbrot/gradle-dependency-report")
