@@ -39,7 +39,7 @@ class ForeignProjectTest {
     @BeforeAll
     static void beforeAll() throws IOException {
         initScript = initScriptDir.resolve("init.gradle");
-        final String content = "            initscript {\n" + "                dependencies {\n" + printClasspathDeps() + "\n" + "                }\n" + "            }\n" + "            allprojects { p ->\n" + "                if(p == p.rootProject) {\n" + "                    p.apply plugin: io.github.beatbrot.dependencyreport.DependencyUpdatesPlugin\n" + "                }\n" + "            }";
+        final String content = "            initscript {\n" + "                dependencies {\n" + printClasspathDeps() + "\n" + "                }\n" + "            }\n" + "            allprojects { p ->\n" + "                if(p == p.rootProject) {\n" + "                    p.apply plugin: io.github.beatbrot.dependencyreport.DependencyReportPlugin\n" + "                }\n" + "            }";
         Files.write(initScript, content.getBytes(UTF_8), CREATE, TRUNCATE_EXISTING);
         benManes = initScriptDir.resolve("manes.gradle");
         final String benManesContent = "initscript {\n" + "  repositories {\n" + "     gradlePluginPortal()\n" + "  }\n" + "\n" + "  dependencies {\n" + "    classpath 'com.github.ben-manes:gradle-versions-plugin:+'\n" + "  }\n" + "}\n" + "\n" + "allprojects {\n" + "  apply plugin: com.github.benmanes.gradle.versions.VersionsPlugin\n" + "\n" + "  tasks.named(\"dependencyUpdates\").configure {\n" + "    outputFormatter = \"json\"" + "  }\n" + "}";

@@ -101,6 +101,7 @@ fun findDep(catalog: VersionCatalog, name: String): Provider<MinimalExternalModu
 
 fun writeString(name: String, content: String): File {
     val output = project.layout.buildDirectory.file("tmp/$name").get().asFile
+    Files.createDirectories(output.toPath().parent)
     Files.writeString(output.toPath(), content, UTF_8, CREATE, TRUNCATE_EXISTING)
     return output
 }
