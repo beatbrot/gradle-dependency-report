@@ -23,3 +23,5 @@ gradleEnterprise {
         termsOfServiceAgree = System.getenv("GRADLE_TOS_AGREE")
     }
 }
+
+includeBuild("example")

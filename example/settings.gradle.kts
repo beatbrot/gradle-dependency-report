@@ -1,0 +1,6 @@
+pluginManagement {
+    includeBuild("./..")
+    repositories {
+        gradlePluginPortal()
+    }
+}
