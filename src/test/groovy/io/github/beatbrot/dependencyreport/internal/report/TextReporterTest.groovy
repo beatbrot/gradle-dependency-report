@@ -1,7 +1,6 @@
 package io.github.beatbrot.dependencyreport.internal.report
 
 import io.github.beatbrot.dependencyreport.internal.analysis.DependencyReport
-import io.github.beatbrot.dependencyreport.internal.analysis.DependencyStatus
 import io.github.beatbrot.dependencyreport.internal.analysis.ImmutableCoordinate
 import io.github.beatbrot.dependencyreport.internal.analysis.ImmutableDependencyStatus
 import io.github.beatbrot.dependencyreport.internal.gradle.ImmutableGradleVersionReport
@@ -18,7 +17,7 @@ class TextReporterTest extends Specification {
     def "Normal report is created"() {
         setup:
         def input = DependencyReport.create(
-            ImmutableGradleVersionReport.of("1", "2"),
+            ImmutableGradleVersionReport.of("1.0", "2.0"),
             [
                 ImmutableDependencyStatus.of(ImmutableCoordinate.of("g","n","1"), "1"),
                 ImmutableDependencyStatus.of(ImmutableCoordinate.of("g","n2","1"), "1"),
@@ -40,7 +39,7 @@ These dependencies have updates available:
 - g2:n [2 -> 3]
 - g2:n2 [2 -> 3]
 
-An update for Gradle is available: [1 -> 2]
+An update for Gradle is available: [1.0 -> 2.0]
 """
     }
 }

@@ -1,22 +1,27 @@
 package io.github.beatbrot.dependencyreport.internal.gradle;
 
 import io.github.beatbrot.dependencyreport.internal.Tuple;
+import org.gradle.util.GradleVersion;
 import org.immutables.value.Value;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 @Value.Immutable
 @Tuple
 public interface GradleVersionReport extends Serializable {
-    String current();
+    String currentInternal();
 
-    String latest();
+    String  latestInternal();
 
-    /**
-     * @return {@code true}, if the {@link #current()} Gradle version differs from the {@link #latest()} version.
-     */
+    default GradleVersion latest(){
+        return GradleVersion.version(latestInternal());
+    }
+
+    default GradleVersion current() {
+        return GradleVersion.version(currentInternal());
+    }
+
     default boolean isUpToDate() {
-        return Objects.equals(current(), latest());
+        return current().compareTo(latest()) >= 0;
     }
 }

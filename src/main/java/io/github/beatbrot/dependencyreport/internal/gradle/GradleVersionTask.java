@@ -28,14 +28,14 @@ public class GradleVersionTask extends DefaultTask {
         // We cast this to Task so that getOutputs returns the public API.
         ((Task) this).getOutputs().upToDateWhen(NEVER);
         gradleVersionFile = objects.fileProperty()
-                .convention(layout.getBuildDirectory().file("tmp/dependency-updates/gradle.ser"));
+            .convention(layout.getBuildDirectory().file("tmp/dependency-updates/gradle.ser"));
     }
 
     @TaskAction
     public void performTask() {
-        final String latestGradleVersion = versionFetcher.getLatestGradleVersion();
-        final String currentGradleVersion = GradleVersion.current().getVersion();
-        final ImmutableGradleVersionReport report = ImmutableGradleVersionReport.of(currentGradleVersion, latestGradleVersion);
+        final GradleVersion currentGradleVersion = GradleVersion.current();
+        GradleVersion latestGradleVersion = GradleVersion.version(versionFetcher.getLatestGradleVersion());
+        final ImmutableGradleVersionReport report = ImmutableGradleVersionReport.of(currentGradleVersion.getVersion(), latestGradleVersion.getVersion());
         Serialization.write(gradleVersionFile.get().getAsFile(), report);
     }
 

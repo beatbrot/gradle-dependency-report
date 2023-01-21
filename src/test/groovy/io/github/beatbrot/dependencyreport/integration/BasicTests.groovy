@@ -58,8 +58,8 @@ class BasicTests extends GradleSpecification {
         result.task(":${GradleVersionTask.NAME}").outcome == TaskOutcome.SUCCESS
         def gradleFile = new File(testProjectDir, "build/tmp/dependency-updates/gradle.ser")
         def createdReport = Serialization.<GradleVersionReport> read(gradleFile)
-        createdReport.current() == "6.0"
-        createdReport.latest() != "6.0"
+        createdReport.currentInternal() == "6.0"
+        createdReport.latestInternal() != "6.0"
     }
 
     def "Task help works"() {

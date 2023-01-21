@@ -48,7 +48,8 @@ public class TextReporter implements Reporter {
         if (gradleReport.isUpToDate()) {
             writer.write("The Gradle version is " + GRADLE_UTD_STRING + "." + NEWLINE);
         } else {
-            writer.write("An update for Gradle is available: " + versionUpgrade(gradleReport.current(), gradleReport.latest()) + NEWLINE);
+            final String updateString = versionUpgrade(gradleReport.current().getVersion(), gradleReport.latest().getVersion());
+            writer.write("An update for Gradle is available: " + updateString + NEWLINE);
         }
     }
 
