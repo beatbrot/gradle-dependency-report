@@ -1,6 +1,7 @@
 Output .github/media/demo.gif
+Set FontFamily 'JetBrains Mono'
 Set Width 800
-Set Height 400
+Set Height 470
 Set Padding 20
 
 Hide
@@ -16,4 +17,3 @@ Set Height 550
 Type ./gradlew dependencyReport
 Enter
 Sleep 10s
-
