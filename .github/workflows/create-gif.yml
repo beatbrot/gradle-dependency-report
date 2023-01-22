@@ -1,0 +1,23 @@
+name: Create GIF
+
+on:
+  workflow_dispatch
+
+jobs:
+  create-gif:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: Prepare gradle build
+        run: ./gradlew -p ./example wrapper dependencyReport
+      - name: Record gif
+        uses: charmbracelet/vhs-action@v1
+        working-directory: ./example
+        with:
+          path: ../.github/media/demo.tape
