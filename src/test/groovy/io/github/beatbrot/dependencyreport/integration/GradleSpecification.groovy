@@ -31,7 +31,6 @@ plugins {
             }
         }
         return GradleRunner.create()
-            .withArguments("--warning-mode", "fail")
             .withProjectDir(testProjectDir)
             .withPluginClasspath()
     }

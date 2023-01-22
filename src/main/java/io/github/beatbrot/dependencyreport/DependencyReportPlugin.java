@@ -21,7 +21,7 @@ public class DependencyReportPlugin implements Plugin<Project> {
 
     @Override
     public void apply(final Project target) {
-        if (target != target.getRootProject()) {
+        if (!target.equals(target.getRootProject())) {
             target.getLogger().warn(PLUGIN_SHOULD_BE_APPLIED_TO_ROOT);
         }
         final TaskProvider<GradleVersionTask> gradleTask = target.getTasks().register(GradleVersionTask.NAME, GradleVersionTask.class);

@@ -31,12 +31,12 @@ public class MultiplexerWriter extends Writer {
 
     private void runForAll(final Command command) throws IOException {
         List<Exception> suppressed = null;
-        for (final Writer childWriter : childWriters) {
+        for (final Writer childWriter : childWriters) { //NOPMD
             try {
                 command.call(childWriter);
             } catch (final Exception e) {
                 if (suppressed == null) {
-                    suppressed = new ArrayList<>();
+                    suppressed = new ArrayList<>(); //NOPMD
                 }
                 suppressed.add(e);
             }

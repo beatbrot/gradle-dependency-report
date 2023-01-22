@@ -9,6 +9,7 @@ import io.github.beatbrot.dependencyreport.internal.report.MultiplexerWriter;
 import io.github.beatbrot.dependencyreport.internal.report.Reporter;
 import io.github.beatbrot.dependencyreport.internal.report.TextReporter;
 import org.gradle.api.DefaultTask;
+import org.gradle.api.Task;
 import org.gradle.api.file.ConfigurableFileCollection;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.ProjectLayout;
@@ -18,6 +19,7 @@ import org.gradle.api.plugins.HelpTasksPlugin;
 import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFiles;
+import org.gradle.api.tasks.OutputFile;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.api.tasks.options.Option;
 import org.gradle.api.tasks.options.OptionValues;
@@ -57,7 +59,8 @@ public class DependencyReportTask extends DefaultTask {
     @Inject
     public DependencyReportTask(final ObjectFactory objectFactory, final ProjectLayout projectLayout) {
         setGroup(HelpTasksPlugin.HELP_GROUP);
-        setDescription("Creates a report about available dependency & Gradle updates.");
+        setDescription("Creates a report about available dependency and Gradle updates.");
+        ((Task) this).getOutputs().upToDateWhen(t -> !((DependencyReportTask) t).printToConsole.get());
         this.dependencyFiles = objectFactory.fileCollection();
         this.gradleVersionFile = objectFactory.fileCollection();
         this.printToConsole = objectFactory.property(Boolean.TYPE).convention(true);
@@ -87,7 +90,7 @@ public class DependencyReportTask extends DefaultTask {
     private BufferedWriter createWriter(final Path outPath, final boolean printToConsole) throws IOException {
         final BufferedWriter fileWriter = Files.newBufferedWriter(outPath, UTF_8, CREATE, TRUNCATE_EXISTING);
         if (printToConsole) {
-            final PrintWriter stdoutWriter = new PrintWriter(System.out);
+            final PrintWriter stdoutWriter = new PrintWriter(System.out); // NOPMD
             return new BufferedWriter(new MultiplexerWriter(Arrays.asList(fileWriter, stdoutWriter)));
         } else {
             return fileWriter;
@@ -132,12 +135,17 @@ public class DependencyReportTask extends DefaultTask {
     @OptionValues(PRINT_OPT)
     @SuppressWarnings("unused")
     Collection<Boolean> getBooleanOptions() {
-        return Arrays.asList(false,true);
+        return Arrays.asList(false, true);
     }
 
     @Option(description = CHECK_DESC, option = CHECK_OPT)
     @SuppressWarnings("unused")
     public void setNoGradleVersionCheck() {
         gradleVersionFile.setFrom();
+    }
+
+    @OutputFile
+    public RegularFileProperty getOutputFile() {
+        return outputFile;
     }
 }
