@@ -1,4 +1,4 @@
-Output frames/
+Output .github/media/demo.gif
 Hide
 Type cd example
 Enter
@@ -10,3 +10,4 @@ Set Height 550
 Type ./gradlew dependencyReport
 Enter
 Sleep 10s
+
