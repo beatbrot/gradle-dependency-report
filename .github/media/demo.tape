@@ -1,6 +1,6 @@
 Output .github/media/demo.gif
 Set Width 800
-Set Height 360
+Set Height 400
 Set Padding 20
 
 Hide
