@@ -6,9 +6,12 @@
 [![Grade Build](https://github.com/beatbrot/gradle-dependency-report/actions/workflows/gradle.yml/badge.svg?branch=main)](https://github.com/beatbrot/gradle-dependency-report/actions/workflows/gradle.yml)[![Gradle Version](https://img.shields.io/badge/gradle-6.0+-blue.svg)](https://gradle.org) [![License](https://img.shields.io/github/license/beatbrot/gradle-dependency-report)](https://mit-license.org/)
 
 </p>
+<p>
 Keep your dependencies updated and secure with this Gradle plugin.
+</p>
 
-![GIF demoing the plugin](.github/media/demo.gif)
+
+<img src=".github/media/demo.gif" alt="GIF demoing the Plugin" width="70%">
 
 </div>
 
