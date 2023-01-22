@@ -18,6 +18,5 @@ jobs:
         run: ./gradlew -p ./example wrapper dependencyReport
       - name: Record gif
         uses: charmbracelet/vhs-action@v1
-        working-directory: ./example
         with:
-          path: ../.github/media/demo.tape
+          path: .github/media/demo.tape
