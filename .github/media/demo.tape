@@ -2,6 +2,8 @@ Output .github/media/demo.gif
 Hide
 Type cd example
 Enter
+Type clear
+Enter
 Show
 # Set Theme "Pro" 7
 Set Theme "Dracula"
