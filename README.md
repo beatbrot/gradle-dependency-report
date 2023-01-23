@@ -10,8 +10,11 @@
 Keep your dependencies updated and secure with this Gradle plugin.
 </p>
 
-
-<img src=".github/media/demo.gif" alt="GIF demoing the Plugin" width="70%">
+<picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./github/media/screenshot-dark.png">
+    <source media="(prefers-color-scheme: light)" srcset="./github/media/screenshot-light.png">
+    <img alt="GIF demoing the plugin" src="./github/media/screenshot-light.png" />
+</picture>
 
 </div>
 
