@@ -5,7 +5,7 @@ spotbugsAnnotations = "com.github.spotbugs:spotbugs-annotations:4.7.3"
 test-archunit = "com.tngtech.archunit:archunit:1.0.1"
 test-byteBuddy = "net.bytebuddy:byte-buddy:1.12.21"
 test-mockserver = "org.mock-server:mockserver-netty:5.14.0"
-test-assertj = "org.assertj:assertj-core:3.24.0"
+test-assertj = "org.assertj:assertj-core:3.24.2"
 
 [plugins]
 gradlePublish = { id = "com.gradle.plugin-publish", version = "1.1.0" }
