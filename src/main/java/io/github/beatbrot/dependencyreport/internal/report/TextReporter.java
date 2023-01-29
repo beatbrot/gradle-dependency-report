@@ -9,12 +9,11 @@ import java.io.Writer;
 import java.util.Collection;
 import java.util.SortedSet;
 
-public class TextReporter implements Reporter {
+public class TextReporter {
 
     private static final char NEWLINE = '\n';
     private static final String GRADLE_UTD_STRING = "UP-TO-DATE";
 
-    @Override
     public void report(final Writer writer, final DependencyReport report) throws IOException {
         writeUpToDateDeps(writer, report.upToDateDependencies());
         writeOutdatedDeps(writer, report.outdatedDependencies());

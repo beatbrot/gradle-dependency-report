@@ -1,5 +1,6 @@
 package io.github.beatbrot;
 
+import org.apache.commons.io.FileUtils;
 import org.gradle.testkit.runner.BuildResult;
 import org.gradle.testkit.runner.BuildTask;
 import org.gradle.testkit.runner.GradleRunner;
@@ -17,7 +18,9 @@ import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.List;
+import java.util.Properties;
+import java.util.StringJoiner;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -34,7 +37,7 @@ class ForeignProjectTest {
     static Path benManes;
 
     @TempDir
-    Path gradleCacheDir;
+    Path projectDir;
 
     @BeforeAll
     static void beforeAll() throws IOException {
@@ -48,19 +51,22 @@ class ForeignProjectTest {
 
     @ParameterizedTest
     @MethodSource("enumerateExternalProjects")
-    void apply_Plugin_to_external_project(final Path project) throws IOException {
-        final BuildResult mine = gradleRunner(project).withArguments(args("--init-script", initScript.toString(), "dependencyReport")).build();
+    void apply_Plugin_to_external_project(final Path origPath) throws IOException {
+        initProjectDir(origPath);
+        final BuildResult mine = gradleRunner(projectDir).withArguments("--init-script", initScript.toString(), "dependencyReport").build();
 
         assertThat(mine.task(":dependencyReport")).isNotNull().extracting(BuildTask::getOutcome).isEqualTo(TaskOutcome.SUCCESS);
         ReportResult.parseMine(mine.getOutput());
+
     }
 
     @ParameterizedTest
     @MethodSource("enumerateExternalProjects")
     @Disabled("Only needed as reference.")
-    void apply_ben_manes_plugin(final Path project) throws IOException {
+    void apply_ben_manes_plugin(final Path origPath) throws IOException {
+        initProjectDir(origPath);
         final String taskName = "dependencyUpdates";
-        final BuildResult result = gradleRunner(project)
+        final BuildResult result = gradleRunner(projectDir)
             .withArguments("--init-script", benManes.toString(), taskName)
             .build();
 
@@ -68,6 +74,10 @@ class ForeignProjectTest {
             .isNotNull()
             .extracting(BuildTask::getOutcome)
             .isEqualTo(TaskOutcome.SUCCESS);
+    }
+
+    private void initProjectDir(Path origDir) throws IOException {
+        FileUtils.copyDirectory(origDir.toFile(), projectDir.toFile());
     }
 
     private static GradleRunner gradleRunner(final Path project) throws IOException {
@@ -97,12 +107,5 @@ class ForeignProjectTest {
             return s.filter(Files::isDirectory)
                 .collect(Collectors.toList());
         }
-    }
-
-    private List<String> args(String... otherArgs) {
-        ArrayList<String> result = new ArrayList<>();
-        result.addAll(Arrays.asList("--project-cache-dir", gradleCacheDir.toString()));
-        result.addAll(Arrays.asList(otherArgs));
-        return result;
     }
 }

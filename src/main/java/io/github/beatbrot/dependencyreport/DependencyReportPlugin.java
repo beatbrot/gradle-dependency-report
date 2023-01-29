@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("unused")
-public class DependencyReportPlugin implements Plugin<Project> {
+public abstract class DependencyReportPlugin implements Plugin<Project> {
 
     public static final String PLUGIN_SHOULD_BE_APPLIED_TO_ROOT = "WARN: The dependency-updates plugin must be applied to the root project to get a complete report.";
 

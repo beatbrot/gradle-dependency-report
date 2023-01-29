@@ -17,6 +17,7 @@ class GradleVersionFetcher {
 
     private static final String REQUEST_METHOD = "GET";
     private static final int HTTP_ERROR_CODE_START = 400;
+    private static final String DEFAULT_VERSION_URL = "https://services.gradle.org/versions/current";
     private static final Pattern VERSION_PATTERN = Pattern.compile("\"version\":\"([^\"]*)\"");
     private final URL url;
 
@@ -30,7 +31,7 @@ class GradleVersionFetcher {
     }
 
     public GradleVersionFetcher() {
-        this("https://services.gradle.org/versions/current");
+        this(DEFAULT_VERSION_URL);
     }
 
     public String getLatestGradleVersion() {

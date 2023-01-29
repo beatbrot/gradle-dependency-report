@@ -13,7 +13,7 @@ import org.gradle.util.GradleVersion;
 
 import javax.inject.Inject;
 
-public class GradleVersionTask extends DefaultTask {
+public abstract class GradleVersionTask extends DefaultTask {
 
     public static final String NAME = "analyzeGradleVersion";
 

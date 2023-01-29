@@ -6,6 +6,7 @@ test-archunit = "com.tngtech.archunit:archunit:1.0.1"
 test-byteBuddy = "net.bytebuddy:byte-buddy:1.12.22"
 test-mockserver = "org.mock-server:mockserver-netty:5.15.0"
 test-assertj = "org.assertj:assertj-core:3.24.2"
+test-commonsIo = "commons-io:commons-io:2+"
 
 [plugins]
 gradlePublish = { id = "com.gradle.plugin-publish", version = "1.1.0" }
