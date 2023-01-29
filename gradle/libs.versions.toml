@@ -1,5 +1,5 @@
 [libraries]
-immutables = "org.immutables:value:2.9.2"
+immutables = "org.immutables:value:2.9.3"
 spotbugsAnnotations = "com.github.spotbugs:spotbugs-annotations:4.7.3"
 
 test-archunit = "com.tngtech.archunit:archunit:1.0.1"
