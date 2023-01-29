@@ -62,6 +62,22 @@ class BasicTests extends GradleSpecification {
         createdReport.latestInternal() != "6.0"
     }
 
+    def "Various Gradle versions"(String version) {
+        given:
+        buildFile << PLUGINS_BLOCK
+
+        when:
+        def result = gradleRunner()
+            .withArguments(DependencyReportTask.NAME)
+            .build()
+        then:
+        result.task(":${AnalyzeDependenciesTask.NAME}").outcome == TaskOutcome.SUCCESS
+        result.task(":${DependencyReportTask.NAME}").outcome == TaskOutcome.SUCCESS
+
+        where:
+        version << ["6.0", "6.9", "7.0", "7.4", "8.0-rc2"]
+    }
+
     def "Task help works"() {
         given:
         buildFile << PLUGINS_BLOCK
