@@ -13,17 +13,24 @@ Keep your dependencies updated and secure with this Gradle plugin.
 <picture>
     <source media="(prefers-color-scheme: dark)" srcset=".github/media/screenshot-dark.png">
     <source media="(prefers-color-scheme: light)" srcset=".github/media/screenshot-light.png">
-    <img alt="GIF demoing the plugin" src=".github/media/screenshot-light.png" />
+    <img alt="Screenshot of the plugin's output" src=".github/media/screenshot-light.png" />
 </picture>
 
 </div>
 
 
----
+## Features
+
+- Check for available dependency updates
+- Check for available Gradle Plugin updates
+- Supports [Configuration cache](https://docs.gradle.org/current/userguide/configuration_cache.html)
+- Does not use deprecated or internal Gradle API
+- No runtime dependencies
+- Compatible with Gradle 6 to 8
 
 ## Installation
 
-Add the following line to your `build.gradle` file:
+Add the following to your `build.gradle` file:
 
 ```kotlin
 plugins {
@@ -31,18 +38,15 @@ plugins {
 }
 ```
 
-## Features
-
-- Create reports of your project dependencies and available updates
-- Supports [Configuration cache](https://docs.gradle.org/current/userguide/configuration_cache.html)
-- Does not use deprecated or internal Gradle API
-- No runtime dependencies
-- Compatible with Gradle 6 to 8
-
 ## Usage
 
 Run the command `gradle dependencyReport` to generate a report of your project's dependencies and their update status.
 The report will be printed to console and saved at `build/reports/dependencies.txt`
+
+### Arguments
+
+- **--no-gradle-check**: Do not check for Gradle updates.
+- **--print-to-console=<true,false>**: If true, prnt the dependency report to stdout.
 
 ## License
 
