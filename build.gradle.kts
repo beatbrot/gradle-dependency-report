@@ -35,10 +35,10 @@ dependencies {
 
     blackboxTestImplementation(libs.test.assertj)
     blackboxTestImplementation(libs.test.commonsIo)
-    externalProject("jjohannes:idiomatic-gradle:master")
-    externalProject("square:okhttp:master")
-    externalProject("kotlin:kotlinx-atomicfu:0.19.0")
-    externalProject("android:nowinandroid:main")
+    externalProject(libs.ext.idiomaticGradle)
+    externalProject(libs.ext.okhttp)
+    externalProject(libs.ext.atomicFu)
+    externalProject(libs.ext.nowInAndroid)
 }
 
 signing {

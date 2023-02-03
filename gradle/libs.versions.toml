@@ -8,5 +8,10 @@ test-mockserver = "org.mock-server:mockserver-netty:5.15.0"
 test-assertj = "org.assertj:assertj-core:3.24.2"
 test-commonsIo = "commons-io:commons-io:2+"
 
+ext-idiomaticGradle = "jjohannes:idiomatic-gradle:master"
+ext-okhttp = "square:okhttp:master"
+ext-atomicFu = "kotlin:kotlinx-atomicfu:0.19.0"
+ext-nowInAndroid = "android:nowinandroid:main"
+
 [plugins]
 gradlePublish = { id = "com.gradle.plugin-publish", version = "1.1.0" }
