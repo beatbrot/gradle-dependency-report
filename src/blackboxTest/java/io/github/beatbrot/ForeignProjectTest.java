@@ -98,7 +98,10 @@ class ForeignProjectTest {
 
     private static String printClasspathDeps() {
         final StringJoiner joiner = new StringJoiner("\n");
-        PluginUnderTestMetadataReading.readImplementationClasspath().forEach(it -> joiner.add("classpath files(\"" + it + "\")"));
+        PluginUnderTestMetadataReading.readImplementationClasspath()
+            .stream()
+            .map(f -> f.toString().replace("\\", "\\\\"))
+            .forEach(it -> joiner.add("classpath files(\"" + it.replace("\\", "\\\\") + "\")"));
         return joiner.toString();
     }
 
