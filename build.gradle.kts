@@ -2,7 +2,7 @@ plugins {
     `java-gradle-plugin`
     id("java-convention")
     id("gradle-blackbox-test")
-    alias(libs.plugins.gradlePublish)
+    alias(this@Build_gradle.libs.plugins.gradlePublish)
     signing
 }
 
