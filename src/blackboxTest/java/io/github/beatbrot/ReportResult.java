@@ -1,5 +1,6 @@
 package io.github.beatbrot;
 
+@SuppressWarnings({"UnusedReturnValue", "unused"})
 public class ReportResult {
     private static final String UTD_PREAMBLE = "The following dependencies are UP-TO-DATE:\n";
     private static final String NUTD_PREAMBLE = "These dependencies have updates available:";

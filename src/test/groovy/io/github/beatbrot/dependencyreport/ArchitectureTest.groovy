@@ -16,20 +16,22 @@ import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses
 class ArchitectureTest extends Specification {
 
     @Shared
-    private DescribedPredicate<? super JavaClass> RESIDE_IN_INTERNAL = resideInAPackage("..internal..")
-    private DescribedPredicate<? super JavaClass> RESIDE_IN_GRADLE_INTERNAL = resideInAPackage("org.gradle..internal..")
-    private DescribedPredicate<? super JavaClass> RESIDE_OUT_PLUGIN_INTERNAL = resideOutsideOfPackage("io.github.beatbrot.dependencyreport.internal..")
+    DescribedPredicate<? super JavaClass> RESIDE_IN_INTERNAL = resideInAPackage("..internal..")
+    @Shared
+    DescribedPredicate<? super JavaClass> RESIDE_IN_GRADLE_INTERNAL = resideInAPackage("org.gradle..internal..")
+    @Shared
+    DescribedPredicate<? super JavaClass> RESIDE_OUT_PLUGIN_INTERNAL = resideOutsideOfPackage("io.github.beatbrot.dependencyreport.internal..")
 
     @Shared
     def importedClasses = new ClassFileImporter()
-            .withImportOption(ImportOption.Predefined.DO_NOT_INCLUDE_TESTS)
-            .importPackages("io.github.beatbrot")
+        .withImportOption(ImportOption.Predefined.DO_NOT_INCLUDE_TESTS)
+        .importPackages("io.github.beatbrot")
 
 
     def "We do not depend on Gradle Internal API"() {
         setup:
         def rule = noClasses().should()
-                .dependOnClassesThat(RESIDE_IN_GRADLE_INTERNAL)
+            .dependOnClassesThat(RESIDE_IN_GRADLE_INTERNAL)
         expect:
         rule.check(importedClasses)
     }
@@ -37,14 +39,14 @@ class ArchitectureTest extends Specification {
     def "Public classes do not expose plugin internal API"() {
         setup:
         def rule = methods().that()
-                .areDeclaredInClassesThat(RESIDE_OUT_PLUGIN_INTERNAL)
-                .and().arePublic()
-                .should()
-                .notHaveRawParameterTypes(anyElementThat(RESIDE_IN_INTERNAL))
-                .andShould()
-                .notHaveRawReturnType(RESIDE_IN_INTERNAL)
-                .andShould()
-                .notDeclareThrowableOfType(RESIDE_IN_INTERNAL)
+            .areDeclaredInClassesThat(RESIDE_OUT_PLUGIN_INTERNAL)
+            .and().arePublic()
+            .should()
+            .notHaveRawParameterTypes(anyElementThat(RESIDE_IN_INTERNAL))
+            .andShould()
+            .notHaveRawReturnType(RESIDE_IN_INTERNAL)
+            .andShould()
+            .notDeclareThrowableOfType(RESIDE_IN_INTERNAL)
 
         expect:
         rule.check(importedClasses)
