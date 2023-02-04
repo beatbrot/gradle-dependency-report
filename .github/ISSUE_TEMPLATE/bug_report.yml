@@ -1,0 +1,38 @@
+name: Bug Report
+description: Create a report to help us improve
+labels: [bug]
+assignees: ["beatbrot"]
+body:
+  - type: markdown
+    attributes:
+      value: "Thanks for taking the time to fill out this bug report!"
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Also tell us, what did you expect to happen?
+      placeholder: Tell us what you see!
+    validations:
+      required: true
+  - type: input
+    id: plugin-version
+    attributes:
+      label: Plugin version
+      description: Enter the version of the plugin you used
+      placeholder: v0.1.0
+    validations:
+      required: true
+  - type: input
+    id: gradle-version
+    attributes:
+      label: Gradle version
+      description: Enter the Gradle version you used
+      placeholder: "7.6"
+    validations:
+      required: true
+  - type: input
+    id: build-scan-url
+    attributes:
+      label: Build Scan URL
+      description: Create a build scan with `--scan` and paste the URL here
+      placeholder: https://scans.gradle.com/s/xxxxxxxx
