@@ -3,7 +3,9 @@
 <h1> Dependency Report Plugin</h1>
 <p>
 
-[![Grade Build](https://github.com/beatbrot/gradle-dependency-report/actions/workflows/gradle.yml/badge.svg?branch=main)](https://github.com/beatbrot/gradle-dependency-report/actions/workflows/gradle.yml)[![Gradle Version](https://img.shields.io/badge/gradle-6.0+-blue.svg)](https://gradle.org) [![License](https://img.shields.io/github/license/beatbrot/gradle-dependency-report)](https://mit-license.org/)
+[![Latest version](https://badgen.net/github/release/beatbrot/gradle-dependency-report/stable)](https://github.com/beatbrot/gradle-dependency-report/releases)
+[![Gradle Version](https://img.shields.io/badge/gradle-6.0+-blue.svg)](https://gradle.org) 
+[![License](https://img.shields.io/github/license/beatbrot/gradle-dependency-report)](https://mit-license.org/)
 
 </p>
 <p>
