@@ -32,6 +32,8 @@ jobs:
   
   analyze:
     runs-on: ubuntu-latest
+    permissions: # The Dependency Submission API requires write permission
+      contents: write
     
     steps:
       - name: Checkout Repository
