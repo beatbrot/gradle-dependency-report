@@ -29,3 +29,13 @@ jobs:
           arguments: build --scan
         env:
           GRADLE_TOS_AGREE: yes
+  
+  analyze:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Gradle Dependency Submission
+        uses: mikepenz/gradle-dependency-submission@v0.8.4
+        with:
+          include-build-environment: true
+          sub-module-mode: INDIVIDUAL
