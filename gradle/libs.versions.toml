@@ -3,7 +3,7 @@ immutables = "org.immutables:value:2.9.3"
 spotbugsAnnotations = "com.github.spotbugs:spotbugs-annotations:4.7.3"
 
 test-archunit = "com.tngtech.archunit:archunit:1.0.1"
-test-byteBuddy = "net.bytebuddy:byte-buddy:1.12.23"
+test-byteBuddy = "net.bytebuddy:byte-buddy:1.13.0"
 test-mockserver = "org.mock-server:mockserver-netty:5.15.0"
 test-assertj = "org.assertj:assertj-core:3.24.2"
 test-commonsIo = "commons-io:commons-io:2+"
