@@ -36,7 +36,7 @@ dependencies {
     blackboxTestImplementation(libs.test.assertj)
     blackboxTestImplementation(libs.test.commonsIo)
     externalProject(libs.ext.idiomaticGradle)
-    externalProject(libs.ext.sunflower)
+    externalProject(libs.ext.androidArchSamples)
 }
 
 signing {
