@@ -37,7 +37,6 @@ testing {
                         dependsOn(testTask)
                     }
                     testTask.configure {
-                        shouldRunAfter("test")
                         dependsOn(externalProjectTask)
                         inputs.dir(externalProjectDir)
                             .withPathSensitivity(PathSensitivity.RELATIVE)
