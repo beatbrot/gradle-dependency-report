@@ -3,7 +3,7 @@
 <h1> Dependency Report Plugin</h1>
 <p>
 
-[![Latest version](https://badgen.net/github/release/beatbrot/gradle-dependency-report/stable)](https://github.com/beatbrot/gradle-dependency-report/releases)
+[![Latest version](https://img.shields.io/github/v/release/beatbrot/gradle-dependency-report)](https://github.com/beatbrot/gradle-dependency-report/releases)
 [![Gradle Version](https://img.shields.io/badge/gradle-6.0+-blue.svg)](https://gradle.org) 
 [![License](https://img.shields.io/github/license/beatbrot/gradle-dependency-report)](https://mit-license.org/)
 
@@ -25,7 +25,7 @@ Keep your dependencies updated and secure with this Gradle plugin.
 
 - Check for available dependency updates
 - Check for available Gradle Plugin updates
-- Supports [Configuration cache](https://docs.gradle.org/current/userguide/configuration_cache.html)
+- Supports [configuration cache](https://docs.gradle.org/current/userguide/configuration_cache.html)
 - Does not use deprecated or internal Gradle API
 - No runtime dependencies
 - Compatible with Gradle 6 to 8
