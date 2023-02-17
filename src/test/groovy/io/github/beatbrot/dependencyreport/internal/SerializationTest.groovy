@@ -29,6 +29,7 @@ class SerializationTest extends Specification {
     }
 
     @Canonical
+    @SuppressWarnings('unused')
     static class Person implements Serializable {
         String name
         int age

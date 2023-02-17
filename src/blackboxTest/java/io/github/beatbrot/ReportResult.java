@@ -15,12 +15,12 @@ public class ReportResult {
     public static ReportResult parseMine(final String gradleOutput) {
         final int utdIndex = gradleOutput.indexOf(UTD_PREAMBLE);
         final int nutdIndex = gradleOutput.indexOf(NUTD_PREAMBLE);
-        final String upds = gradleOutput.substring(utdIndex + UTD_PREAMBLE.length(), nutdIndex);
-        final String nupds = gradleOutput.substring(nutdIndex);
+        final String upToDate = gradleOutput.substring(utdIndex + UTD_PREAMBLE.length(), nutdIndex);
+        final String notUpToDate = gradleOutput.substring(nutdIndex);
 
         return new ReportResult(
-            upds.split("- ").length - 1,
-            nupds.split("- ").length - 1
+            upToDate.split("- ").length - 1,
+            notUpToDate.split("- ").length - 1
         );
     }
 

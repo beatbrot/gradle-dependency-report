@@ -22,7 +22,7 @@ class GradleVersionFetcher {
     private final URL url;
 
     // Visible for testing
-    GradleVersionFetcher(final String url) {
+    GradleVersionFetcher(@SuppressWarnings("SameParameterValue") final String url) {
         try {
             this.url = new URL(url);
         } catch (final MalformedURLException e) {

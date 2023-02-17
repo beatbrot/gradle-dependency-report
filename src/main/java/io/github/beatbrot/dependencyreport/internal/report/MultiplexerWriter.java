@@ -15,8 +15,8 @@ public class MultiplexerWriter extends Writer {
     }
 
     @Override
-    public void write(@Nonnull final char[] cbuf, final int off, final int len) throws IOException {
-        runForAll(w -> w.write(cbuf, off, len));
+    public void write(@Nonnull final char[] charBuffer, final int offset, final int length) throws IOException {
+        runForAll(w -> w.write(charBuffer, offset, length));
     }
 
     @Override
