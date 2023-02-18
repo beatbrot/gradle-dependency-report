@@ -6,5 +6,5 @@
     "labels": ["dependency"],
     "reviewers": ["beatbrot"],
     // Ignore external project dependencies
-    "ignoreDeps": ["jjohannes:idiomatic-gradle", "android:architecture-samples:main"],
+    "ignoreDeps": ["jjohannes:idiomatic-gradle", "android:architecture-samples"],
 }
