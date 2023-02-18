@@ -6,6 +6,7 @@ import spock.lang.Specification
 import spock.lang.TempDir
 
 import java.nio.file.Path
+import java.nio.file.Paths
 
 class SerializationTest extends Specification {
 
@@ -26,6 +27,23 @@ class SerializationTest extends Specification {
         1     | new ArrayList<Person>().tap { it.add(new Person("Foo", 1)) }
         2     | new HashSet<Person>().tap { it.add(new Person("Foo", 1)) }
         3     | "FooBar"
+    }
+
+    def "Exceptions are handled correctly"() {
+        when:
+        Serialization.read(Paths.get("doesNotExist"))
+        then:
+        thrown(Serialization.SerializationException)
+
+        when:
+        Serialization.write(outputPath.resolve("foo").toFile(), new NonSerializable(""))
+        then:
+        thrown(Serialization.SerializationException)
+    }
+
+    @Canonical
+    static class NonSerializable {
+        String foo
     }
 
     @Canonical

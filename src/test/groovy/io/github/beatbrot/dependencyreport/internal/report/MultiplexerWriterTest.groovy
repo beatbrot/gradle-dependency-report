@@ -41,4 +41,21 @@ class MultiplexerWriterTest extends Specification {
         1 * writerB.write((char[]) _, _, _)
     }
 
+    def "Multiple exceptions are collected"() {
+        setup:
+        def writerA = Mock(Writer) {
+            1 * it.write((char[]) _, _, _) >> { throw new RuntimeException("exA") }
+        }
+        def writerB = Mock(Writer) {
+            1 * it.write((char[]) _, _, _) >> { throw new RuntimeException("exB") }
+        }
+        def multiplexer = new MultiplexerWriter([writerA, writerB])
+        when:
+        multiplexer.write("foo")
+        then:
+        def ex = thrown(IOException)
+        ex.getSuppressed().length == 2
+        ex.suppressed[0].message == "exA"
+        ex.suppressed[1].message == "exB"
+    }
 }

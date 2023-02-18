@@ -4,6 +4,7 @@ import io.github.beatbrot.dependencyreport.internal.Serialization;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.*;
+import org.gradle.api.artifacts.dsl.DependencyHandler;
 import org.gradle.api.file.ProjectLayout;
 import org.gradle.api.file.RegularFile;
 import org.gradle.api.file.RegularFileProperty;
@@ -90,9 +91,10 @@ public class AnalyzeDependenciesTask extends DefaultTask {
     }
 
     private Collection<ModuleDependency> gatherExternalDependencies(final Configuration configuration, final Function<ModuleDependency, String> versionExtractor) {
+        DependencyHandler depHandler = getProject().getDependencies();
         return configuration.getDependencies().stream().filter(ExternalDependency.class::isInstance).map(ModuleDependency.class::cast).map(d -> {
             final String coordString = d.getGroup() + ":" + d.getName() + ":" + versionExtractor.apply(d);
-            return ((ModuleDependency) getProject().getDependencies().create(coordString)).setTransitive(false);
+            return ((ModuleDependency) depHandler.create(coordString)).setTransitive(false);
         }).collect(Collectors.toList());
     }
 }

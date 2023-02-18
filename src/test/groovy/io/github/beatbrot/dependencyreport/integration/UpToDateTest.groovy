@@ -18,7 +18,6 @@ class UpToDateTest extends GradleSpecification {
         when:
         def result2 = gradleRunner().withArguments(DependencyReportTask.NAME).build()
         then:
-        println result2.output
         result2.task(":${DependencyReportTask.NAME}").outcome == TaskOutcome.SUCCESS
         result2.task(":${AnalyzeDependenciesTask.NAME}").outcome == TaskOutcome.SUCCESS
     }
@@ -36,7 +35,6 @@ class UpToDateTest extends GradleSpecification {
         when:
         def result2 = gradleRunner().withArguments(DependencyReportTask.NAME, "--$DependencyReportTask.PRINT_OPT=false").build()
         then:
-        println result2.output
         result2.task(":${DependencyReportTask.NAME}").outcome == TaskOutcome.UP_TO_DATE
         result2.task(":${AnalyzeDependenciesTask.NAME}").outcome == TaskOutcome.SUCCESS
     }
