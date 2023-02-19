@@ -48,7 +48,7 @@ The report will be printed to console and saved at `build/reports/dependencies.t
 ### Arguments
 
 - **--no-gradle-check**: Do not check for Gradle updates.
-- **--print-to-console=<true,false>**: If true, prnt the dependency report to stdout.
+- **--print-to-console=<true,false>**: If true, print the dependency report to stdout.
 
 ## License
 
