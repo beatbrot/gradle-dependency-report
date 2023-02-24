@@ -12,7 +12,7 @@ class BasicTests extends GradleSpecification {
 
     def "Plugin can be applied"() {
         given:
-        buildFile << PLUGINS_BLOCK
+        settingsFile << PLUGINS_BLOCK
 
         when:
         gradleRunner().build()
@@ -23,7 +23,7 @@ class BasicTests extends GradleSpecification {
 
     def "Run report task"() {
         given:
-        buildFile << PLUGINS_BLOCK
+        settingsFile << PLUGINS_BLOCK
 
         when:
         def result = gradleRunner().withArguments(DependencyReportTask.NAME).build()
@@ -34,7 +34,7 @@ class BasicTests extends GradleSpecification {
 
     def "Gradle Task is disabled"() {
         given:
-        buildFile << PLUGINS_BLOCK
+        settingsFile << PLUGINS_BLOCK
 
         when:
         def result = gradleRunner().withArguments(DependencyReportTask.NAME, "--${DependencyReportTask.CHECK_OPT}", "-s").build()
@@ -46,7 +46,7 @@ class BasicTests extends GradleSpecification {
 
     def "Gradle Update available"() {
         given:
-        buildFile << PLUGINS_BLOCK
+        settingsFile << PLUGINS_BLOCK
 
         when:
         def result = gradleRunner(false)
@@ -64,7 +64,7 @@ class BasicTests extends GradleSpecification {
 
     def "Various Gradle versions"(String version) {
         given:
-        buildFile << PLUGINS_BLOCK
+        settingsFile << PLUGINS_BLOCK
 
         when:
         def result = gradleRunner()
@@ -80,7 +80,7 @@ class BasicTests extends GradleSpecification {
 
     def "Task help works"() {
         given:
-        buildFile << PLUGINS_BLOCK
+        settingsFile << PLUGINS_BLOCK
 
         when:
         def result = gradleRunner()
@@ -97,7 +97,7 @@ class BasicTests extends GradleSpecification {
 
     def "Task parameters work"(String param) {
         given:
-        buildFile << PLUGINS_BLOCK
+        settingsFile << PLUGINS_BLOCK
 
         when:
         gradleRunner()

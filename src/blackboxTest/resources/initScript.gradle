@@ -1,0 +1,8 @@
+initscript {
+    dependencies {
+        %s
+    }
+}
+gradle.settingsEvaluated {Settings s ->
+    s.getPlugins().apply(io.github.beatbrot.dependencyreport.DependencyReportPlugin)
+}

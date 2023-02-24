@@ -15,11 +15,15 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.StringJoiner;
 import java.util.stream.Collectors;
@@ -43,10 +47,10 @@ class ForeignProjectTest {
     @BeforeAll
     static void beforeAll() throws IOException {
         initScript = initScriptDir.resolve("init.gradle");
-        final String content = "            initscript {\n" + "                dependencies {\n" + printClasspathDeps() + "\n" + "                }\n" + "            }\n" + "            allprojects { p ->\n" + "                if(p == p.rootProject) {\n" + "                    p.apply plugin: io.github.beatbrot.dependencyreport.DependencyReportPlugin\n" + "                }\n" + "            }";
+        String content = String.format(loadTemplate("/initScript.gradle"), printClasspathDeps());
         Files.write(initScript, content.getBytes(UTF_8), CREATE, TRUNCATE_EXISTING);
         benManes = initScriptDir.resolve("manes.gradle");
-        final String benManesContent = "initscript {\n" + "  repositories {\n" + "     gradlePluginPortal()\n" + "  }\n" + "\n" + "  dependencies {\n" + "    classpath 'com.github.ben-manes:gradle-versions-plugin:+'\n" + "  }\n" + "}\n" + "\n" + "allprojects {\n" + "  apply plugin: com.github.benmanes.gradle.versions.VersionsPlugin\n" + "\n" + "  tasks.named(\"dependencyUpdates\").configure {\n" + "    outputFormatter = \"json\"" + "  }\n" + "}";
+        final String benManesContent = loadTemplate("/benManes.gradle");
         Files.write(benManes, benManesContent.getBytes(UTF_8), CREATE, TRUNCATE_EXISTING);
     }
 
@@ -120,6 +124,13 @@ class ForeignProjectTest {
             return s.filter(Files::isDirectory)
                 .map(p -> Arguments.of(projectName(p), p))
                 .collect(Collectors.toList());
+        }
+    }
+
+    static String loadTemplate(String name) throws IOException {
+        try (InputStream stream = ForeignProjectTest.class.getResourceAsStream(name);
+             BufferedReader reader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(stream), UTF_8))) {
+            return reader.lines().collect(Collectors.joining("\n"));
         }
     }
 
