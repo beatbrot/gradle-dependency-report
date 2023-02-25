@@ -18,10 +18,13 @@ plugins {
     File testProjectDir
     File settingsFile
     File buildFile
+    File propertiesFile
 
     def setup() {
         settingsFile = new File(testProjectDir, "settings.gradle")
         buildFile = new File(testProjectDir, 'build.gradle')
+        propertiesFile = new File(testProjectDir, 'gradle.properties')
+        propertiesFile << "org.gradle.warning.mode=fail"
     }
 
     protected GradleRunner gradleRunner(boolean stableConfigCache = true) {

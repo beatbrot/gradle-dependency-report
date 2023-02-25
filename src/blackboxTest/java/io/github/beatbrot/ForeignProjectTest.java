@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.io.BufferedReader;
@@ -49,15 +50,24 @@ class ForeignProjectTest {
         Files.write(benManes, benManesContent.getBytes(UTF_8), CREATE, TRUNCATE_EXISTING);
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "{0}")
     @MethodSource("enumerateExternalProjects")
-    void apply_Plugin_to_external_project(final Path origPath) throws IOException {
+    void apply_Plugin_to_external_project(String name, final Path origPath) throws IOException {
         initProjectDir(origPath);
         final BuildResult mine = gradleRunner(projectDir).withArguments("--init-script", initScript.toString(), "dependencyReport").build();
 
         assertThat(mine.task(":dependencyReport")).isNotNull().extracting(BuildTask::getOutcome).isEqualTo(TaskOutcome.SUCCESS);
-        ReportResult.parseMine(mine.getOutput());
-
+        ReportResult result = ReportResult.parseMine(mine.getOutput());
+        switch (name) {
+            case "architecture-samples":
+                assertThat(result.getOutdatedDeps()).isEqualTo(33);
+                break;
+            case "idiomatic-gradle":
+                assertThat(result.getOutdatedDeps()).isZero();
+                break;
+            default:
+                throw new UnsupportedOperationException();
+        }
     }
 
     @ParameterizedTest
@@ -105,10 +115,16 @@ class ForeignProjectTest {
         return joiner.toString();
     }
 
-    private static List<Path> enumerateExternalProjects() throws IOException {
+    private static List<Arguments> enumerateExternalProjects() throws IOException {
         try (final Stream<Path> s = Files.list(Paths.get("build/external"))) {
             return s.filter(Files::isDirectory)
+                .map(p -> Arguments.of(projectName(p), p))
                 .collect(Collectors.toList());
         }
+    }
+
+    private static String projectName(Path path) {
+        String dirName = path.getFileName().toString();
+        return dirName.substring(0, dirName.lastIndexOf('-'));
     }
 }
