@@ -32,7 +32,7 @@ Keep your dependencies updated and secure with this Gradle plugin.
 
 ## Installation
 
-Add the following to your `build.gradle` file:
+Add the following to your `settings.gradle` file:
 
 ```kotlin
 plugins {
