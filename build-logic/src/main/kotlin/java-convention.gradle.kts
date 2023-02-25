@@ -37,7 +37,7 @@ testing {
 }
 
 pmd {
-    toolVersion = "6.54.0"
+    toolVersion = "6.55.0"
     ruleSets = listOf()
     //language=xml
     ruleSetConfig = project.resources.text.fromString("""
