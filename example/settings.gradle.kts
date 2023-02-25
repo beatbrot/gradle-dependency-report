@@ -4,3 +4,7 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
+
+plugins {
+    id("io.github.beatbrot.dependency-report")
+}
