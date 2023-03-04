@@ -1,6 +1,5 @@
 plugins {
     java
-    id("io.github.beatbrot.dependency-report")
 }
 
 repositories {

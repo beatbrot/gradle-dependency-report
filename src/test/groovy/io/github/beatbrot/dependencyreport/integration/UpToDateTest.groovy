@@ -7,7 +7,7 @@ import org.gradle.testkit.runner.TaskOutcome
 class UpToDateTest extends GradleSpecification {
     def "Tasks are never up-to-date when printing to console"() {
         setup:
-        buildFile << PLUGINS_BLOCK
+        settingsFile << PLUGINS_BLOCK
 
         when:
         def result = gradleRunner().withArguments(DependencyReportTask.NAME).build()
@@ -24,7 +24,7 @@ class UpToDateTest extends GradleSpecification {
 
     def "Tasks are up-to-date when not printing to console"() {
         setup:
-        buildFile << PLUGINS_BLOCK
+        settingsFile << PLUGINS_BLOCK
 
         when:
         def result = gradleRunner().withArguments(DependencyReportTask.NAME, "--$DependencyReportTask.PRINT_OPT=false").build()
@@ -41,7 +41,7 @@ class UpToDateTest extends GradleSpecification {
 
     def "Supports configuration cache"() {
         setup:
-        buildFile << PLUGINS_BLOCK
+        settingsFile << PLUGINS_BLOCK
 
         when:
         def result = gradleRunner().withArguments(DependencyReportTask.NAME, "--configuration-cache").build()
