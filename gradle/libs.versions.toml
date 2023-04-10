@@ -9,7 +9,7 @@ test-assertj = "org.assertj:assertj-core:3.24.2"
 test-commonsIo = "commons-io:commons-io:2+"
 
 ext-idiomaticGradle = "jjohannes:idiomatic-gradle:1b611d2e81edf6728c0745d5b5bc66d92e976475"
-ext-androidArchSamples = "android:architecture-samples:a3d0c076e6aab1abcf403a903a8dc077ef332ed9"
+ext-androidArchSamples = "android:architecture-samples:d7ba290d1f33205d5890bb221ad1ac883ebd4c80"
 
 [plugins]
 gradlePublish = { id = "com.gradle.plugin-publish", version = "1.1.0" }
