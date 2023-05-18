@@ -4,6 +4,7 @@ import io.github.beatbrot.dependencyreport.internal.analysis.DependencyReport;
 import io.github.beatbrot.dependencyreport.internal.analysis.DependencyStatus;
 import io.github.beatbrot.dependencyreport.internal.gradle.GradleVersionReport;
 
+import javax.annotation.Nullable;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Collection;
@@ -52,7 +53,7 @@ public class TextReporter {
         }
     }
 
-    private static String versionUpgrade(final String current, final String latest) {
+    private static String versionUpgrade(@Nullable final String current, @Nullable final String latest) {
         return "[" + current + " -> " + latest + "]";
     }
 }

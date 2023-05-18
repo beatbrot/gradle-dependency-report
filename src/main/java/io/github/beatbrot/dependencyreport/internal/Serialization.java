@@ -15,6 +15,7 @@ public final class Serialization {
         throw new UnsupportedOperationException();
     }
 
+    @SuppressWarnings("TypeParameterUnusedInFormals")
     public static <T> T read(final Path path) {
         try (final ObjectInputStream o = new ObjectInputStream(Files.newInputStream(path))) {
             return uncheckedCast(o.readObject());
@@ -23,6 +24,7 @@ public final class Serialization {
         }
     }
 
+    @SuppressWarnings("TypeParameterUnusedInFormals")
     public static <T> T read(final File file) {
         return read(file.toPath());
     }
@@ -41,7 +43,7 @@ public final class Serialization {
         }
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "TypeParameterUnusedInFormals"})
     private static <T> T uncheckedCast(final Object o) {
         return (T) o;
     }

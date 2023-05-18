@@ -1,5 +1,6 @@
 package io.github.beatbrot.dependencyreport.internal.gradle;
 
+import javax.annotation.Nullable;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -69,7 +70,7 @@ class GradleVersionFetcher {
     }
 
     public static class GradleVersionQueryException extends RuntimeException {
-        private GradleVersionQueryException(final String message, final Throwable cause) {
+        private GradleVersionQueryException(final String message, @Nullable final Throwable cause) {
             super(message, cause);
         }
 
