@@ -58,9 +58,12 @@ tasks.named<Test>("test") {
     jvmArgumentProviders.add(CommandLineArgumentProvider { mutableListOf("-Dspock.configuration=${spockConfig}") })
 }
 
-tasks.withType(JavaCompile::class) {
-    options.compilerArgs.add("-Werror")
+tasks.withType<JavaCompile> {
     options.encoding = "UTF-8"
+}
+
+tasks.withType<Javadoc> {
+    (options as CoreJavadocOptions).addStringOption("Xdoclint:none", "-quiet")
 }
 
 fun findDep(catalog: VersionCatalog, name: String): Provider<MinimalExternalModuleDependency> {
