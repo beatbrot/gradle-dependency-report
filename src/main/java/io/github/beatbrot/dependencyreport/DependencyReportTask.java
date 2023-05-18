@@ -1,6 +1,5 @@
 package io.github.beatbrot.dependencyreport;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.github.beatbrot.dependencyreport.internal.Serialization;
 import io.github.beatbrot.dependencyreport.internal.analysis.DependencyReport;
 import io.github.beatbrot.dependencyreport.internal.analysis.DependencyStatus;
@@ -83,8 +82,7 @@ public abstract class DependencyReportTask extends DefaultTask {
         }
     }
 
-    @SuppressFBWarnings("DM")
-    @SuppressWarnings("java:S106")
+    @SuppressWarnings("DefaultCharset")
     private BufferedWriter createWriter(final Path outPath, final boolean printToConsole) throws IOException {
         final BufferedWriter fileWriter = Files.newBufferedWriter(outPath, UTF_8, CREATE, TRUNCATE_EXISTING);
         if (printToConsole) {

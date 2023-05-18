@@ -4,7 +4,7 @@ plugins {
     java
     `maven-publish`
     groovy
-    pmd
+    id("java-codestyle")
 }
 
 val catalog = extensions.getByType<VersionCatalogsExtension>().named("libs")
@@ -14,17 +14,23 @@ repositories {
 }
 
 java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(8))
+        languageVersion.set(JavaLanguageVersion.of(17))
     }
+}
+
+tasks.withType(Test::class.java).configureEach {
+    javaLauncher.set(javaToolchains.launcherFor {
+        languageVersion.set(JavaLanguageVersion.of(8))
+    })
 }
 
 dependencies {
     testRuntimeOnly(findDep(catalog, "test-byteBuddy")) {
         because("Spock requires it for mocks.")
     }
-
-    compileOnly(findDep(catalog, "spotbugsAnnotations"))
 }
 
 @Suppress("UnstableApiUsage")
@@ -34,29 +40,6 @@ testing {
             useSpock()
         }
     }
-}
-
-pmd {
-    toolVersion = "6.55.0"
-    ruleSets = listOf()
-    //language=xml
-    ruleSetConfig = project.resources.text.fromString("""
-        <?xml version="1.0"?>
-        <ruleset name="Custom Rules"
-            xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.io/ruleset_2_0_0.xsd">
-
-            <description>
-                My custom rules
-            </description>
-            <rule ref='category/java/bestpractices.xml'/>
-            <rule ref='category/java/performance.xml'/>
-            <rule ref='category/java/errorprone.xml'>
-                <exclude name='MissingSerialVersionUID'/>
-            </rule>
-        </ruleset>
-    """.trimIndent())
 }
 
 tasks.named<Test>("test") {
