@@ -5,7 +5,7 @@ build-errorprone-gradle = "net.ltgt.gradle:gradle-errorprone-plugin:3.1.0"
 build-errorprone = "com.google.errorprone:error_prone_core:2.21.1"
 build-errorprone-nullaway = "com.uber.nullaway:nullaway:0.10.12"
 
-test-archunit = "com.tngtech.archunit:archunit:1.0.1"
+test-archunit = "com.tngtech.archunit:archunit:1.1.0"
 test-byteBuddy = "net.bytebuddy:byte-buddy:1.14.5"
 test-mockserver = "org.mock-server:mockserver-netty:5.15.0"
 test-assertj = "org.assertj:assertj-core:3.24.2"
