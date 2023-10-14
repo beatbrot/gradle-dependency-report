@@ -5,6 +5,8 @@ import org.gradle.api.DefaultTask;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.*;
 import org.gradle.api.artifacts.dsl.DependencyHandler;
+import org.gradle.api.attributes.Attribute;
+import org.gradle.api.attributes.AttributeContainer;
 import org.gradle.api.file.ProjectLayout;
 import org.gradle.api.file.RegularFile;
 import org.gradle.api.file.RegularFileProperty;
@@ -18,6 +20,8 @@ import javax.inject.Inject;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+
+import static io.github.beatbrot.dependencyreport.internal.Util.uncheckedCast;
 
 public class AnalyzeDependenciesTask extends DefaultTask {
 
@@ -45,8 +49,8 @@ public class AnalyzeDependenciesTask extends DefaultTask {
 
     private void analyze(final ConfigurationContainer container) {
         for (final Configuration config : new ArrayList<>(container)) {
-            final LenientConfiguration current = createResolvableConfig(config, ModuleDependency::getVersion);
-            final LenientConfiguration latest = createResolvableConfig(config, ignored -> "+");
+            final LenientConfiguration current = createResolvableConfig(container, config, ModuleDependency::getVersion);
+            final LenientConfiguration latest = createResolvableConfig(container, config, ignored -> "+");
             analyzeConfiguration(result, current, latest);
         }
     }
@@ -80,14 +84,26 @@ public class AnalyzeDependenciesTask extends DefaultTask {
         }
     }
 
-    private LenientConfiguration createResolvableConfig(final Configuration configuration, final Function<ModuleDependency, String> versionSelector) {
+    private LenientConfiguration createResolvableConfig(ConfigurationContainer container,
+                                                        final Configuration configuration,
+                                                        final Function<ModuleDependency, String> versionSelector) {
         final Collection<ModuleDependency> deps = gatherExternalDependencies(configuration, versionSelector);
 
-        final Configuration copy = configuration.copyRecursive(s -> false);
-        copy.setTransitive(false);
+        final Configuration copy = container.detachedConfiguration();
+        copy.setVisible(false);
         copy.setCanBeResolved(true);
+        copy.setCanBeConsumed(false);
+        copy.setTransitive(false);
+        copyAttrs(configuration.getAttributes(), copy.getAttributes());
         copy.getDependencies().addAll(deps);
         return copy.getResolvedConfiguration().getLenientConfiguration();
+    }
+
+    private static void copyAttrs(AttributeContainer original, AttributeContainer copy) {
+        AttributeContainer originalAttrs = original.getAttributes();
+        for (Attribute<?> attribute : originalAttrs.keySet()) {
+            copy.attribute(attribute, uncheckedCast(Objects.requireNonNull(original.getAttribute(attribute))));
+        }
     }
 
     private Collection<ModuleDependency> gatherExternalDependencies(final Configuration configuration, final Function<ModuleDependency, String> versionExtractor) {

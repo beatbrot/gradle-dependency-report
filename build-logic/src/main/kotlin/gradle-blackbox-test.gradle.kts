@@ -18,10 +18,10 @@ repositories {
     }
 }
 
-val config = configurations.create("externalProject")
+val config = configurations.register("externalProject")
 val externalProjectDir = project.layout.buildDirectory.dir("external")
 val externalProjectTask = tasks.register<Sync>("downloadExternalProjects") {
-    from(config.map { zipTree(it) })
+    from(config.map { c -> c.map { zipTree(it) } })
     into(externalProjectDir)
 }
 
