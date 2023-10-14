@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "io.github.beatbrot"
-version = "0.0.1-SNAPSHOT"
+version = "0.1.0"
 
 @Suppress("UnstableApiUsage")
 gradlePlugin {
