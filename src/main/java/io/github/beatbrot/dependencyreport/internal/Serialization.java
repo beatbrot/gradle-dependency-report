@@ -7,6 +7,7 @@ import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import static io.github.beatbrot.dependencyreport.internal.Util.uncheckedCast;
 import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 
@@ -41,10 +42,5 @@ public final class Serialization {
         public SerializationException(final String message, final Throwable cause) {
             super(message, cause);
         }
-    }
-
-    @SuppressWarnings({"unchecked", "TypeParameterUnusedInFormals"})
-    private static <T> T uncheckedCast(final Object o) {
-        return (T) o;
     }
 }
