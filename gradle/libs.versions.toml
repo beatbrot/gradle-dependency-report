@@ -8,7 +8,7 @@ build-errorprone-nullaway = "com.uber.nullaway:nullaway:0.10.21"
 test-archunit = "com.tngtech.archunit:archunit:1.2.1"
 test-byteBuddy = "net.bytebuddy:byte-buddy:1.14.11"
 test-mockserver = "org.mock-server:mockserver-netty:5.15.0"
-test-assertj = "org.assertj:assertj-core:3.25.1"
+test-assertj = "org.assertj:assertj-core:3.25.2"
 test-commonsIo = "commons-io:commons-io:2+"
 
 ext-idiomaticGradle = "jjohannes:idiomatic-gradle:1b611d2e81edf6728c0745d5b5bc66d92e976475"
