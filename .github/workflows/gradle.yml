@@ -20,9 +20,10 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
       - name: Build with Gradle
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/actions/setup-gradle@v3
         with:
           dependency-graph: generate-and-submit
           arguments: build --scan
+          cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
         env:
           GRADLE_TOS_AGREE: yes
