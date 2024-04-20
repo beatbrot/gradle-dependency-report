@@ -18,8 +18,6 @@ plugins {
 develocity {
     buildScan {
         capture.fileFingerprints = true
-        termsOfUseUrl = "https://gradle.com/terms-of-service"
-        termsOfUseAgree = System.getenv("GRADLE_TOS_AGREE")
     }
 }
 
