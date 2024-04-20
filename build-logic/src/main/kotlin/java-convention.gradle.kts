@@ -14,11 +14,14 @@ repositories {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(21))
     }
+}
+
+tasks.withType(JavaCompile::class.java).configureEach {
+    this.options.release = 8
+    this.options.compilerArgs.add("-Xlint:-options")
 }
 
 tasks.withType(Test::class.java).configureEach {
