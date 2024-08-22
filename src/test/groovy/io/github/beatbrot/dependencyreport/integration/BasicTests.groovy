@@ -1,6 +1,7 @@
 package io.github.beatbrot.dependencyreport.integration
 
 import io.github.beatbrot.dependencyreport.DependencyReportTask
+import io.github.beatbrot.dependencyreport.Java8Util
 import io.github.beatbrot.dependencyreport.internal.Serialization
 import io.github.beatbrot.dependencyreport.internal.analysis.AnalyzeDependenciesTask
 import io.github.beatbrot.dependencyreport.internal.gradle.GradleVersionReport
@@ -47,6 +48,7 @@ class BasicTests extends GradleSpecification {
     def "Gradle Update available"() {
         given:
         buildFile << PLUGINS_BLOCK
+        Java8Util.configureJavaHome(propertiesFile)
 
         when:
         def result = gradleRunner(false)
