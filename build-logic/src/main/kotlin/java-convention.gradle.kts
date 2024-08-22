@@ -25,8 +25,11 @@ tasks.withType(JavaCompile::class.java).configureEach {
 }
 
 tasks.withType(Test::class.java).configureEach {
-    javaLauncher.set(javaToolchains.launcherFor {
+    val java8Home = javaToolchains.launcherFor {
         languageVersion.set(JavaLanguageVersion.of(8))
+    }.map { it.metadata.installationPath.asFile.absolutePath }
+    environment("JAVA8_HOME", object  {
+        override fun toString() = java8Home.get()
     })
 }
 
