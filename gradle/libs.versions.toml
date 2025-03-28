@@ -3,7 +3,7 @@ immutables = "org.immutables:value:2.10.1"
 
 build-errorprone-gradle = "net.ltgt.gradle:gradle-errorprone-plugin:4.1.0"
 build-errorprone = "com.google.errorprone:error_prone_core:2.37.0"
-build-errorprone-nullaway = "com.uber.nullaway:nullaway:0.12.4"
+build-errorprone-nullaway = "com.uber.nullaway:nullaway:0.12.6"
 
 test-archunit = "com.tngtech.archunit:archunit:1.4.0"
 test-byteBuddy = "net.bytebuddy:byte-buddy:1.17.4"
