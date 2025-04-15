@@ -9,7 +9,7 @@ test-archunit = "com.tngtech.archunit:archunit:1.4.0"
 test-byteBuddy = "net.bytebuddy:byte-buddy:1.17.5"
 test-mockserver = "org.mock-server:mockserver-netty:5.15.0"
 test-assertj = "org.assertj:assertj-core:3.27.3"
-test-commonsIo = "commons-io:commons-io:2+"
+test-commonsIo = "commons-io:commons-io:2.19.0"
 
 ext-idiomaticGradle = "jjohannes:idiomatic-gradle:1b611d2e81edf6728c0745d5b5bc66d92e976475"
 ext-androidArchSamples = "android:architecture-samples:d7ba290d1f33205d5890bb221ad1ac883ebd4c80"
