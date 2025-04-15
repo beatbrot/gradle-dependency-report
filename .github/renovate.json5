@@ -7,4 +7,5 @@
     "reviewers": [],
     // Ignore external project dependencies
     "ignoreDeps": ["jjohannes:idiomatic-gradle", "android:architecture-samples"],
+    dependencyDashboard: true
 }
