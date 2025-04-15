@@ -1,5 +1,6 @@
 {
     "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    dependencyDashboard: true,
     "extends": [
         ":semanticCommitTypeAll(chore)"
     ],
@@ -7,5 +8,10 @@
     "reviewers": [],
     // Ignore external project dependencies
     "ignoreDeps": ["jjohannes:idiomatic-gradle", "android:architecture-samples"],
-    dependencyDashboard: true
+    packageRules: [
+        {
+            matchCategories: ["gradle"],
+            "automerge": true,
+        }
+    ]
 }
