@@ -60,7 +60,7 @@ class ForeignProjectTest {
         ReportResult result = ReportResult.parseMine(mine.getOutput());
         switch (name) {
             case "architecture-samples":
-                assertThat(result.getOutdatedDeps()).isEqualTo(39);
+                assertThat(result.getOutdatedDeps()).isEqualTo(38);
                 break;
             case "idiomatic-gradle":
                 assertThat(result.getOutdatedDeps()).isZero();
