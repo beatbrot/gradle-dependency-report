@@ -1,5 +1,5 @@
 [libraries]
-immutables = "org.immutables:value:2.10.1"
+immutables = "org.immutables:value:2.11.0"
 
 build-errorprone-gradle = "net.ltgt.gradle:gradle-errorprone-plugin:4.3.0"
 build-errorprone = "com.google.errorprone:error_prone_core:2.39.0"
