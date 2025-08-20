@@ -8,6 +8,7 @@
     "reviewers": [],
     // Ignore external project dependencies
     "ignoreDeps": ["jjohannes:idiomatic-gradle", "android:architecture-samples"],
+    automerge: true,
     packageRules: [
         {
             matchCategories: ["gradle"],
