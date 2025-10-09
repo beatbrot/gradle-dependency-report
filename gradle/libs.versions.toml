@@ -6,7 +6,7 @@ build-errorprone = "com.google.errorprone:error_prone_core:2.42.0"
 build-errorprone-nullaway = "com.uber.nullaway:nullaway:0.12.10"
 
 test-archunit = "com.tngtech.archunit:archunit:1.4.1"
-test-byteBuddy = "net.bytebuddy:byte-buddy:1.17.7"
+test-byteBuddy = "net.bytebuddy:byte-buddy:1.17.8"
 test-mockserver = "org.mock-server:mockserver-netty:5.15.0"
 test-assertj = "org.assertj:assertj-core:3.27.6"
 test-commonsIo = "commons-io:commons-io:2.20.0"
