@@ -1,7 +1,7 @@
 [libraries]
 immutables = "org.immutables:value:2.12.1"
 
-build-errorprone-gradle = "net.ltgt.gradle:gradle-errorprone-plugin:4.4.0"
+build-errorprone-gradle = "net.ltgt.gradle:gradle-errorprone-plugin:5.0.0"
 build-errorprone = "com.google.errorprone:error_prone_core:2.46.0"
 build-errorprone-nullaway = "com.uber.nullaway:nullaway:0.13.1"
 
