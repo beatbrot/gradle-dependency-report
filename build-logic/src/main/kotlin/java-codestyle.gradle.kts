@@ -19,7 +19,7 @@ tasks.withType<JavaCompile>().configureEach {
             option("NullAway:AnnotatedPackages", "io.github.beatbrot")
         }
     } else {
-        opts.isEnabled.set(false)
+        opts.enabled.set(false)
     }
 }
 
