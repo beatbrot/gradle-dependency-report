@@ -9,15 +9,15 @@ import org.gradle.api.model.ObjectFactory;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.OutputFile;
 import org.gradle.api.tasks.TaskAction;
+import org.gradle.api.tasks.UntrackedTask;
 import org.gradle.util.GradleVersion;
 
 import javax.inject.Inject;
 
+@UntrackedTask(because = "We fetch version information from the internet")
 public abstract class GradleVersionTask extends DefaultTask {
 
     public static final String NAME = "analyzeGradleVersion";
-
-    private static final Spec<Task> NEVER = t -> false;
 
     private final GradleVersionFetcher versionFetcher = new GradleVersionFetcher();
 
@@ -25,8 +25,6 @@ public abstract class GradleVersionTask extends DefaultTask {
 
     @Inject
     public GradleVersionTask(final ObjectFactory objects, final ProjectLayout layout) {
-        // We cast this to Task so that getOutputs returns the public API.
-        ((Task) this).getOutputs().upToDateWhen(NEVER);
         gradleVersionFile = objects.fileProperty()
             .convention(layout.getBuildDirectory().file("tmp/dependency-updates/gradle.ser"));
     }
