@@ -15,6 +15,7 @@ import org.gradle.api.provider.Provider;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.OutputFile;
 import org.gradle.api.tasks.TaskAction;
+import org.gradle.api.tasks.UntrackedTask;
 
 import javax.inject.Inject;
 import java.util.*;
@@ -23,11 +24,10 @@ import java.util.stream.Collectors;
 
 import static io.github.beatbrot.dependencyreport.internal.Util.uncheckedCast;
 
+@UntrackedTask(because = "Not worth tracking")
 public class AnalyzeDependenciesTask extends DefaultTask {
 
     public static final String NAME = "analyzeDependencies";
-
-    private static final Spec<Task> NEVER = t -> false;
 
     private final RegularFileProperty outputFile;
 
@@ -37,8 +37,6 @@ public class AnalyzeDependenciesTask extends DefaultTask {
     public AnalyzeDependenciesTask(final ProjectLayout projectLayout, final ObjectFactory objects) {
         final Provider<RegularFile> defaultOutFile = projectLayout.getBuildDirectory().file("tmp/dependency-updates/dependencies.ser");
         this.outputFile = objects.fileProperty().convention(defaultOutFile);
-        // We cast this to Task so that getOutputs returns the public API.
-        ((Task) this).getOutputs().upToDateWhen(NEVER);
         analyzeAll();
     }
 
@@ -90,7 +88,6 @@ public class AnalyzeDependenciesTask extends DefaultTask {
         final Collection<ModuleDependency> deps = gatherExternalDependencies(configuration, versionSelector);
 
         final Configuration copy = container.detachedConfiguration();
-        copy.setVisible(false);
         copy.setCanBeResolved(true);
         copy.setCanBeConsumed(false);
         copy.setTransitive(false);

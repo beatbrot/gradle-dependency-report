@@ -35,6 +35,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 
+@CacheableTask
 public abstract class DependencyReportTask extends DefaultTask {
 
     public static final String NAME = "dependencyReport";
