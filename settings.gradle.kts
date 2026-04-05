@@ -15,10 +15,11 @@ plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version ("1.0.0")
 }
 
+val ciEnvVar = providers.environmentVariable("CI")
 develocity {
     buildScan {
         publishing.onlyIf {
-            providers.environmentVariable("CI").isPresent
+            ciEnvVar.isPresent
         }
         capture.fileFingerprints = true
     }
