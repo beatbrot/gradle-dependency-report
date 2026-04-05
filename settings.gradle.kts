@@ -17,6 +17,9 @@ plugins {
 
 develocity {
     buildScan {
+        publishing.onlyIf {
+            providers.environmentVariable("CI").isPresent
+        }
         capture.fileFingerprints = true
     }
 }
