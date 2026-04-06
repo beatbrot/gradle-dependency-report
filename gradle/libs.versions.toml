@@ -11,8 +11,8 @@ test-mockserver = "org.mock-server:mockserver-netty:5.15.0"
 test-assertj = "org.assertj:assertj-core:3.27.7"
 test-commonsIo = "commons-io:commons-io:2.21.0"
 
-ext-idiomaticGradle = "jjohannes:idiomatic-gradle:1b611d2e81edf6728c0745d5b5bc66d92e976475"
-ext-androidArchSamples = "android:architecture-samples:d7ba290d1f33205d5890bb221ad1ac883ebd4c80"
+ext-idiomaticGradle = "jjohannes:idiomatic-gradle:a66ca68952dd4420f8f2fb56b015c1b8521e76a9"
+ext-androidArchSamples = "android:architecture-samples:ee66e1526b84c026615df032c705842b7d2a521f"
 
 [bundles]
 build-errorprone = ["build-errorprone", "build-errorprone-nullaway"]
