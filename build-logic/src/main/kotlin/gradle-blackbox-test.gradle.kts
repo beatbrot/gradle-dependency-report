@@ -41,7 +41,7 @@ testing {
                         inputs.dir(externalProjectDir)
                             .withPathSensitivity(PathSensitivity.RELATIVE)
                             .withPropertyName("External projects")
-                        javaLauncher.set(javaToolchains.launcherFor { languageVersion.set(JavaLanguageVersion.of(11)) })
+                        javaLauncher.set(javaToolchains.launcherFor { languageVersion.set(JavaLanguageVersion.of(21)) })
                     }
                 }
             }
