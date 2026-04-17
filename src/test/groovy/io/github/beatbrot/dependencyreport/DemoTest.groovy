@@ -12,4 +12,11 @@ class DemoTest extends Specification {
         then:
         actual == expected
     }
+
+    def "I am rather flaky!"() {
+        setup:
+        def rand = new Random()
+        expect:
+        rand.nextBoolean()
+    }
 }
