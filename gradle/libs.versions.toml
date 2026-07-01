@@ -7,7 +7,7 @@ build-errorprone-nullaway = "com.uber.nullaway:nullaway:0.13.7"
 
 test-archunit = "com.tngtech.archunit:archunit:1.4.2"
 test-byteBuddy = "net.bytebuddy:byte-buddy:1.18.10"
-test-mockserver = "org.mock-server:mockserver-netty:7.2.0"
+test-mockserver = "org.mock-server:mockserver-netty:7.3.0"
 test-assertj = "org.assertj:assertj-core:3.27.7"
 test-commonsIo = "commons-io:commons-io:2.22.0"
 
