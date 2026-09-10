@@ -18,4 +18,4 @@ ext-androidArchSamples = "android:architecture-samples:ee66e1526b84c026615df032c
 build-errorprone = ["build-errorprone", "build-errorprone-nullaway"]
 
 [plugins]
-gradlePublish = { id = "com.gradle.plugin-publish", version = "2.1.1" }
+gradlePublish = { id = "com.gradle.plugin-publish", version = "2.2.1" }
